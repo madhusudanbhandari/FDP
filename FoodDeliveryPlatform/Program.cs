@@ -2,6 +2,7 @@ using System.Reflection.Metadata;
 using System.Text;
 using FDP.Data;
 using FDP.Interface;
+using FDP.Middleware;
 using FDP.Repository;
 using FDP.Services;
 using FDP.Services.Auth;
@@ -71,6 +72,8 @@ builder.Services.AddScoped<IRestaurantRepository,RestaurantRepository>();
 builder.Services.AddScoped<IRestaurantService,RestaurantService>();
 
 var app=builder.Build();
+
+app.UseMiddleware<GlobalExceptionMiddleware>();
 
 if (app.Environment.IsDevelopment())
 {

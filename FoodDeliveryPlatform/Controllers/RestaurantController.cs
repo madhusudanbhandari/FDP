@@ -3,6 +3,7 @@ using FDP.Dtos.Restaurant;
 using FDP.Interface;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace FDP.Controller;
 
@@ -22,7 +23,10 @@ public class RestaurantController : ControllerBase
     [HttpPost("create-restaurant")]
     public async Task<IActionResult> CreateRestaurant(CreateRestaurantDto dto)
     {
-        var restaurant=await _restaurantService.CreateRestaurantAsync(dto);
+        var claim=User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        int.TryParse(claim, out int Id);
+
+        var restaurant=await _restaurantService.CreateRestaurantAsync(dto,Id);
         return Ok(restaurant);
     }
 
@@ -30,7 +34,10 @@ public class RestaurantController : ControllerBase
     [HttpPatch("update-restaurant")]
     public async Task<IActionResult> UpdateRestaurant(int id,UpdateRestaurantDto dto)
     {
-        var updated=await _restaurantService.UpdateRestaurantAsync(id,dto);
+        var claim=User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        int.TryParse(claim, out var Id);
+
+        var updated=await _restaurantService.UpdateRestaurantAsync(id,dto,Id);
         return Ok(updated);
     }
 
@@ -41,12 +48,23 @@ public class RestaurantController : ControllerBase
         return Ok(restaurant);
     }
 
-    [Authorize(Roles ="Admin,Customer")]
     [HttpGet("View-all-restaurants")]
     public async Task<IActionResult> ViewAllRestaurants()
     {
         var restaurants=await _restaurantService.SeeAllRestaurantsAsync();
         return Ok(restaurants);
+    }
+
+    [Authorize(Roles ="Admin,RestaurantOwner")]
+    [HttpDelete("delete")]
+    public async Task<IActionResult> DeleteRestaurant(int id)
+    {
+        var claim=User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        int.TryParse(claim,out int Id);
+
+        var restaurant=await _restaurantService.DeleteRestaurantAsync(id,Id);
+
+        return Ok(restaurant);
     }
 
 

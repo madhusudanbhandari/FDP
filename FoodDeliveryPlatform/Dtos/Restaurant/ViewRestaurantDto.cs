@@ -10,4 +10,6 @@ public class ViewRestaurantDto
 
     public int Capacity{get;set;}
     public string Special{get;set;}=string.Empty;
+
+    public int ownerId{get;set;}
 }

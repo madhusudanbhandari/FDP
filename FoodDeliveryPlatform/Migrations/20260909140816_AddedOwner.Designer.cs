@@ -2,6 +2,7 @@
 using FDP.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -10,9 +11,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace FoodDeliveryPlatform.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260909140816_AddedOwner")]
+    partial class AddedOwner
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -96,15 +99,10 @@ namespace FoodDeliveryPlatform.Migrations
             modelBuilder.Entity("FDP.Models.Restaurant", b =>
                 {
                     b.HasOne("FDP.Models.User", "RestaurantOwner")
-                        .WithMany("Restaurants")
+                        .WithMany()
                         .HasForeignKey("RestaurantOwnerId");
 
                     b.Navigation("RestaurantOwner");
-                });
-
-            modelBuilder.Entity("FDP.Models.User", b =>
-                {
-                    b.Navigation("Restaurants");
                 });
 #pragma warning restore 612, 618
         }

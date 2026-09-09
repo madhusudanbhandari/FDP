@@ -25,9 +25,18 @@ public class RestaurantRepository:IRestaurantRepository
         return await _context.Restaurants.FirstOrDefaultAsync(r=>r.Id==id);
     }
 
+    public async Task <Restaurant?> GetRestaurantByOwnerIdAsync(int ownerId)
+    {
+        return await _context.Restaurants.FirstOrDefaultAsync(r=>r.OwnerId==ownerId);
+    }
+
     public async Task AddAsync(Restaurant restaurant)
     {
         await _context.Restaurants.AddAsync(restaurant );
+    }
+    public async Task RemoveAsync(Restaurant restaurant)
+    {
+         _context.Restaurants.Remove(restaurant);
     }
 
     public async Task SaveChangesAsync()

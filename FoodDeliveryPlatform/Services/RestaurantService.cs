@@ -14,14 +14,15 @@ public class RestaurantService : IRestaurantService
         _restaurantRepository=restaurantRepository;
     }
 
-    public async Task<ViewRestaurantDto> CreateRestaurantAsync(CreateRestaurantDto dto)
+    public async Task<ViewRestaurantDto> CreateRestaurantAsync(CreateRestaurantDto dto,int ownerId)
     {
         var restaurant=new Restaurant
         {
             Name=dto.Name,
             Address=dto.Address,
             Capacity=dto.Capacity,
-            Special=dto.Special
+            Special=dto.Special,
+            OwnerId=ownerId
         };
 
         await _restaurantRepository.AddAsync(restaurant);
@@ -33,17 +34,24 @@ public class RestaurantService : IRestaurantService
             Name=restaurant.Name,
             Address=restaurant.Address,
             Capacity=restaurant.Capacity,
-            Special=restaurant.Special
+            Special=restaurant.Special,
+            ownerId=restaurant.OwnerId,
+            
         };
     }
 
-    public async Task<ViewRestaurantDto?> UpdateRestaurantAsync(int id, UpdateRestaurantDto dto)
+    public async Task<ViewRestaurantDto?> UpdateRestaurantAsync(int id, UpdateRestaurantDto dto,int ownerId)
     {
         var restaurant=await _restaurantRepository.GetRestaurantByIdAsync(id);
 
         if(restaurant == null)
         {
          return null;   
+        }
+
+        if (restaurant.OwnerId != ownerId)
+        {
+            throw new UnauthorizedAccessException("You dont own this restaurant");
         }
 
         restaurant.Name=dto.Name;
@@ -59,7 +67,8 @@ public class RestaurantService : IRestaurantService
             Name=restaurant.Name,
             Address=restaurant.Address,
             Capacity=restaurant.Capacity,
-            Special=restaurant.Special
+            Special=restaurant.Special,
+            ownerId=restaurant.OwnerId
         };
     }
 
@@ -74,7 +83,8 @@ public class RestaurantService : IRestaurantService
         Name=r.Name,
         Address=r.Address,
         Capacity=r.Capacity,
-        Special=r.Special
+        Special=r.Special,
+        ownerId=r.OwnerId
     }).ToList();      
 
     }
@@ -94,9 +104,29 @@ public class RestaurantService : IRestaurantService
             Name=restaurant.Name,
             Address=restaurant.Address,
             Capacity=restaurant.Capacity,
-            Special=restaurant.Special
+            Special=restaurant.Special,
+            ownerId=restaurant.OwnerId
 
         };
+    }
+    public async Task<string?> DeleteRestaurantAsync(int id,int ownerId)
+    {
+        var restaurant=await _restaurantRepository.GetRestaurantByIdAsync(id);
+
+        if (restaurant == null)
+        {
+            return null;
+        }
+
+        if (restaurant.OwnerId != ownerId)
+        {
+            throw new UnauthorizedAccessException("You dont own this restaurant");
+        }
+
+        await _restaurantRepository.RemoveAsync(restaurant);
+        await _restaurantRepository.SaveChangesAsync();
+
+        return "Deleted successfully";
     }
     
 
