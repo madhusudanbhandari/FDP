@@ -13,12 +13,12 @@ namespace FDP.Services.Auth;
 
 public class AuthService : IAuthService
 {
-    private readonly AppDbContext _context;
+    private readonly IAuthRepository _authRepository;
     private readonly IConfiguration _configuration;
 
-    public AuthService(AppDbContext context,IConfiguration configuration)
+    public AuthService(IAuthRepository authRepository,IConfiguration configuration)
     {
-        _context=context;
+        _authRepository=authRepository;
         _configuration=configuration;
     }
 
@@ -34,8 +34,8 @@ public class AuthService : IAuthService
             Role=dto.Role
         };
 
-        await _context.Users.AddAsync(user);
-        await _context.SaveChangesAsync();
+        await _authRepository.AddAsync(user);
+        await _authRepository.SaveChangesAsync();
 
         return new RegisterResponseDto
         {
@@ -50,8 +50,7 @@ public class AuthService : IAuthService
 
     public async Task<LoginResponseDto?> LoginUserAsnyc(LoginUserDto dto)
     {
-     var user=await _context.Users 
-        .FirstOrDefaultAsync(u=>u.Email==dto.Email);
+     var user=await _authRepository.GetByEmailAsync(dto.Email);
 
         if (user == null)
         {

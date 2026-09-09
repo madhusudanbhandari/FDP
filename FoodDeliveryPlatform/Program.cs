@@ -1,8 +1,14 @@
+using System.Reflection.Metadata;
 using System.Text;
 using FDP.Data;
+using FDP.Interface;
+using FDP.Repository;
+using FDP.Services;
+using FDP.Services.Auth;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi;
 
 var builder=WebApplication.CreateBuilder(args);
 
@@ -37,11 +43,46 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                     };
                 });
 
+builder.Services.AddEndpointsApiExplorer();
+
+builder.Services.AddSwaggerGen(options =>
+{
+    options.AddSecurityDefinition("Bearer",new OpenApiSecurityScheme
+    {
+        Name="Authorization",
+        Type=SecuritySchemeType.Http,
+        Scheme="bearer",
+        BearerFormat="JWT",
+        In=ParameterLocation.Header,
+        Description="Enter your token"
+    });
+    options.AddSecurityRequirement(Document=>
+    new OpenApiSecurityRequirement
+    {
+        [new OpenApiSecuritySchemeReference("Bearer",Document)]=[]
+    });
+
+
+});
+
+builder.Services.AddScoped<IAuthService,AuthService>();
+builder.Services.AddScoped<IAuthRepository, AuthRepository>();
+builder.Services.AddScoped<IRestaurantRepository,RestaurantRepository>();
+builder.Services.AddScoped<IRestaurantService,RestaurantService>();
+
 var app=builder.Build();
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.UseHttpsRedirection();
+app.MapControllers();
+
+// app.UseHttpsRedirection();
 
 app.Run();
