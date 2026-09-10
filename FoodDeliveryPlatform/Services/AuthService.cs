@@ -1,13 +1,11 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Security.Cryptography.X509Certificates;
 using System.Text;
-using FDP.Data;
 using FDP.Dtos.User;
 using FDP.Interface;
 using FDP.Models;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using AutoMapper;
 
 namespace FDP.Services.Auth;
 
@@ -16,10 +14,13 @@ public class AuthService : IAuthService
     private readonly IAuthRepository _authRepository;
     private readonly IConfiguration _configuration;
 
-    public AuthService(IAuthRepository authRepository,IConfiguration configuration)
+    private readonly IMapper _mapper;
+
+    public AuthService(IAuthRepository authRepository,IConfiguration configuration,IMapper mapper)
     {
         _authRepository=authRepository;
         _configuration=configuration;
+        _mapper=mapper;
     }
 
     public async Task<RegisterResponseDto> RegisterUserAsync(RegisterUserDto dto)
@@ -37,14 +38,16 @@ public class AuthService : IAuthService
         await _authRepository.AddAsync(user);
         await _authRepository.SaveChangesAsync();
 
-        return new RegisterResponseDto
-        {
-            FirstName=user.FirstName,
-            LastName=user.LastName,
-            Email=user.Email,
-            Address=user.Address,
-            Role=user.Role
-        };
+        // return new RegisterResponseDto
+        // {
+        //     FirstName=user.FirstName,
+        //     LastName=user.LastName,
+        //     Email=user.Email,
+        //     Address=user.Address,
+        //     Role=user.Role
+        // };
+
+        return _mapper.Map<RegisterResponseDto>(user);
 
     }   
 
@@ -64,15 +67,19 @@ public class AuthService : IAuthService
 
         var token=GenerateToken(user);
 
-        return new LoginResponseDto
-        {
-            Id=user.Id,
-            FirstName=user.FirstName,
-            LastName=user.LastName,
-            Email=user.Email,
-            Token=token,
-            Role=user.Role,
-        };
+        // return new LoginResponseDto
+        // {
+        //     Id=user.Id,
+        //     FirstName=user.FirstName,
+        //     LastName=user.LastName,
+        //     Email=user.Email,
+        //     Token=token,
+        //     Role=user.Role,
+        // };
+
+        var response= _mapper.Map<LoginResponseDto>(user);
+        response.Token=token;
+        return response;
     }
 
     private string GenerateToken(User user)

@@ -3,17 +3,26 @@ using System.Text;
 using FDP.Data;
 using FDP.Interface;
 using FDP.Middleware;
+using FDP.Profiles;
 using FDP.Repository;
 using FDP.Services;
 using FDP.Services.Auth;
+using FDP.Validators;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
+using AutoMapper;
+
 
 var builder=WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
+
+builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddValidatorsFromAssemblyContaining<RegisterUserDtoValidator>();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
@@ -70,6 +79,11 @@ builder.Services.AddScoped<IAuthService,AuthService>();
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 builder.Services.AddScoped<IRestaurantRepository,RestaurantRepository>();
 builder.Services.AddScoped<IRestaurantService,RestaurantService>();
+
+builder.Services.AddAutoMapper(cfg =>
+{
+    cfg.AddProfile<UserProfile>();
+});
 
 var app=builder.Build();
 

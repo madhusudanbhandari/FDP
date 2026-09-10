@@ -1,10 +1,14 @@
 {
   "version": 2,
-  "dgSpecHash": "6NDuA5kkUMs=",
+  "dgSpecHash": "a4uH3cxKvWw=",
   "success": true,
   "projectFilePath": "/Users/madhusudanbhandari/Desktop/FDS/FDP/FoodDeliveryPlatform/FoodDeliveryPlatform.csproj",
   "expectedPackageFiles": [
+    "/Users/madhusudanbhandari/.nuget/packages/automapper/16.2.0/automapper.16.2.0.nupkg.sha512",
     "/Users/madhusudanbhandari/.nuget/packages/bcrypt.net-next/4.2.0/bcrypt.net-next.4.2.0.nupkg.sha512",
+    "/Users/madhusudanbhandari/.nuget/packages/fluentvalidation/12.1.1/fluentvalidation.12.1.1.nupkg.sha512",
+    "/Users/madhusudanbhandari/.nuget/packages/fluentvalidation.aspnetcore/11.3.1/fluentvalidation.aspnetcore.11.3.1.nupkg.sha512",
+    "/Users/madhusudanbhandari/.nuget/packages/fluentvalidation.dependencyinjectionextensions/11.11.0/fluentvalidation.dependencyinjectionextensions.11.11.0.nupkg.sha512",
     "/Users/madhusudanbhandari/.nuget/packages/humanizer.core/2.14.1/humanizer.core.2.14.1.nupkg.sha512",
     "/Users/madhusudanbhandari/.nuget/packages/microsoft.aspnet.webapi.client/4.0.20710/microsoft.aspnet.webapi.client.4.0.20710.nupkg.sha512",
     "/Users/madhusudanbhandari/.nuget/packages/microsoft.aspnet.webapi.core/4.0.20710/microsoft.aspnet.webapi.core.4.0.20710.nupkg.sha512",
