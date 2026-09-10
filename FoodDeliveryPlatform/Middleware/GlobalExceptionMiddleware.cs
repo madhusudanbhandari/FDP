@@ -1,5 +1,7 @@
 using System.Net;
 using System.Text.Json;
+using FDP.Exceptions;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace FDP.Middleware;
 public class GlobalExceptionMiddleware
@@ -35,12 +37,26 @@ public class GlobalExceptionMiddleware
     )
     {
         context.Response.ContentType="application/json";
-        context.Response.StatusCode=(int)HttpStatusCode.InternalServerError;
+
+        var statusCode=exception switch
+        {
+            NotFoundException=>StatusCodes.Status404NotFound,
+            BadRequestException=>StatusCodes.Status400BadRequest,
+            UnauthorizedAccessException=>StatusCodes.Status401Unauthorized,
+            _ => StatusCodes.Status500InternalServerError
+        };
 
         var response = new
         {
-            StatusCode=context.Response.StatusCode,
-            message="Unexpected error occured"
+            StatusCode=statusCode,
+            message=exception switch
+            {
+                NotFoundException=>exception.Message,
+                BadRequestException=>exception.Message,
+                UnauthorizedAccessException=>exception.Message,
+
+                _=>"An unexpected error occured"
+            }
         };
 
         await context.Response.WriteAsync(

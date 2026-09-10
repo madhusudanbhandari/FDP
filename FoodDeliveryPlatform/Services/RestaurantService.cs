@@ -1,6 +1,8 @@
 using FDP.Dtos.Restaurant;
+using FDP.Exceptions;
 using FDP.Interface;
 using FDP.Models;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace FDP.Services;
@@ -46,7 +48,7 @@ public class RestaurantService : IRestaurantService
 
         if(restaurant == null)
         {
-         return null;   
+            throw new NotFoundException("Restaurant not found");
         }
 
         if (restaurant.OwnerId != ownerId)
@@ -95,7 +97,7 @@ public class RestaurantService : IRestaurantService
 
         if (restaurant== null)
         {
-            return null;
+            throw new NotFoundException("Restaurant not found");
         }
 
         return new ViewRestaurantDto
@@ -115,7 +117,7 @@ public class RestaurantService : IRestaurantService
 
         if (restaurant == null)
         {
-            return null;
+            throw new NotFoundException("Restaurant not found");
         }
 
         if (restaurant.OwnerId != ownerId)

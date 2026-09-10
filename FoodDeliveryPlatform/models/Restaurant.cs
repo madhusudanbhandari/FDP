@@ -13,4 +13,6 @@ public class Restaurant
 
     public int OwnerId{get;set;}
     public User? RestaurantOwner{get;set;}
+
+    public ICollection<Menu> Menus{get;set;}=new List<Menu>();
 }
