@@ -8,19 +8,29 @@ namespace FDP.Services;
 public class MenuService : IMenuService
 {
     private readonly IMenuRepository _menuRepository;
-    public MenuService(IMenuRepository menuRepository)
+    private readonly IRestaurantRepository _restaurantRepository;
+    public MenuService(IMenuRepository menuRepository,IRestaurantRepository restaurantRepository)
     {
         _menuRepository=menuRepository;
+        _restaurantRepository=restaurantRepository;
     }
 
-    public async Task <ViewMenuDto> CreateMenuAsync(CreateMenuDto dto,int restaurantId)
+    public async Task <ViewMenuDto> CreateMenuAsync(int restaurantId,int ownerId)
     {
+        var restaurant=await _restaurantRepository.GetRestaurantByIdAsync(restaurantId);
+
+        if (restaurant == null)
+        {
+            throw new NotFoundException("Cannot find the restaurant");
+        }       
+
+        if (restaurant.OwnerId != ownerId)
+        {
+            throw new InvalidOperationException("You do not own this restaurant");
+        }
+
         var menu=new Menu
         {
-            Category=dto.Category,
-            ItemName=dto.ItemName,
-            ItemPrice=dto.ItemPrice,
-            quantity=dto.quantity,
             RestaurantId=restaurantId        
         };
 
@@ -30,10 +40,6 @@ public class MenuService : IMenuService
          return new ViewMenuDto
          {
              Id=menu.Id,
-             Category=menu.Category,
-             ItemName=menu.ItemName,
-             ItemPrice=menu.ItemPrice,
-             quantity=menu.quantity,
              RestaurantId=menu.RestaurantId
 
          };
@@ -41,35 +47,35 @@ public class MenuService : IMenuService
          
     }
 
-    public async Task<ViewMenuDto?> UpdateMenuAsync(int id, UpdateMenuDto dto,int restaurantId)
-    {
-        var menu=await _menuRepository.GetMenuByIdAsync(id);
-        if (menu == null)
-        {
-            throw new NotFoundException("Cannot find the menu");
-        }
+    // public async Task<ViewMenuDto?> UpdateMenuAsync(int id, UpdateMenuDto dto,int restaurantId)
+    // {
+    //     var menu=await _menuRepository.GetMenuByIdAsync(id);
+    //     if (menu == null)
+    //     {
+    //         throw new NotFoundException("Cannot find the menu");
+    //     }
 
-        if (menu.RestaurantId != restaurantId)
-        {
-           throw new BadRequestException("This is not your menu"); 
-        }
+    //     if (menu.RestaurantId != restaurantId)
+    //     {
+    //        throw new BadRequestException("This is not your menu"); 
+    //     }
 
-        menu.Category=dto.Category;
-        menu.ItemName=dto.ItemName;
-        menu.ItemPrice=dto.ItemPrice;
-        menu.quantity=dto.quantity;
+    //     menu.Category=dto.Category;
+    //     menu.ItemName=dto.ItemName;
+    //     menu.ItemPrice=dto.ItemPrice;
+    //     menu.quantity=dto.quantity;
 
-        return new ViewMenuDto
-         {
-             Id=menu.Id,
-             Category=menu.Category,
-             ItemName=menu.ItemName,
-             ItemPrice=menu.ItemPrice,
-             quantity=menu.quantity,
-             RestaurantId=menu.RestaurantId
+    //     return new ViewMenuDto
+    //      {
+    //          Id=menu.Id,
+    //          Category=menu.Category,
+    //          ItemName=menu.ItemName,
+    //          ItemPrice=menu.ItemPrice,
+    //          quantity=menu.quantity,
+    //          RestaurantId=menu.RestaurantId
 
-         };
-    }
+    //      };
+    // }
 
     public async Task<ViewMenuDto?> GetMenuByIdAsync(int id)
     {
@@ -83,10 +89,6 @@ public class MenuService : IMenuService
         return new ViewMenuDto
          {
              Id=menu.Id,
-             Category=menu.Category,
-             ItemName=menu.ItemName,
-             ItemPrice=menu.ItemPrice,
-             quantity=menu.quantity,
              RestaurantId=menu.RestaurantId
 
          };
@@ -99,10 +101,6 @@ public class MenuService : IMenuService
         return menus.Select(menu=>new ViewMenuDto
          {
              Id=menu.Id,
-             Category=menu.Category,
-             ItemName=menu.ItemName,
-             ItemPrice=menu.ItemPrice,
-             quantity=menu.quantity,
              RestaurantId=menu.RestaurantId
 
          }).ToList();
@@ -114,7 +112,7 @@ public class MenuService : IMenuService
 
         if (menu == null)
         {
-            throw new NotFoundException("Cannot find the exception");
+            throw new NotFoundException("Cannot find the menu");
         }
 
         await _menuRepository.RemoveAsync(menu);

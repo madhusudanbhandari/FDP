@@ -79,6 +79,10 @@ builder.Services.AddScoped<IAuthService,AuthService>();
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 builder.Services.AddScoped<IRestaurantRepository,RestaurantRepository>();
 builder.Services.AddScoped<IRestaurantService,RestaurantService>();
+builder.Services.AddScoped<IMenuRepository,MenuRepository>();
+builder.Services.AddScoped<IMenuService,MenuService>();
+builder.Services.AddScoped<IMenuItemRepository, MenuItemRepository>();
+builder.Services.AddScoped<IMenuItemService,MenuItemService>();
 
 builder.Services.AddAutoMapper(cfg =>
 {
