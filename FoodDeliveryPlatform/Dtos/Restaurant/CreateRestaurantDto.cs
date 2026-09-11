@@ -8,4 +8,7 @@ public class CreateRestaurantDto
     public string Address{get;set;}=string.Empty;
     public int Capacity{get;set;}
     public string Special{get;set;}=string.Empty;
+
+    public bool? IsOpen{get;set;}
+    public double Rating{get;set;}
 }

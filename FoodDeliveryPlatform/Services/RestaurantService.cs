@@ -1,3 +1,4 @@
+using FDP.Dtos.Common;
 using FDP.Dtos.Restaurant;
 using FDP.Exceptions;
 using FDP.Interface;
@@ -24,6 +25,8 @@ public class RestaurantService : IRestaurantService
             Address=dto.Address,
             Capacity=dto.Capacity,
             Special=dto.Special,
+            IsOpen=dto.IsOpen,
+            Rating=dto.Rating,
             OwnerId=ownerId
         };
 
@@ -38,6 +41,8 @@ public class RestaurantService : IRestaurantService
             Capacity=restaurant.Capacity,
             Special=restaurant.Special,
             ownerId=restaurant.OwnerId,
+            IsOpen=restaurant.IsOpen,
+            Rating=restaurant.Rating,
             
         };
     }
@@ -60,6 +65,8 @@ public class RestaurantService : IRestaurantService
         restaurant.Address=dto.Address;
         restaurant.Capacity=dto.Capacity;
         restaurant.Special=dto.Special;
+        restaurant.IsOpen=dto.IsOpen;
+        restaurant.Rating=dto.Rating;
 
         await _restaurantRepository.SaveChangesAsync();
 
@@ -70,24 +77,38 @@ public class RestaurantService : IRestaurantService
             Address=restaurant.Address,
             Capacity=restaurant.Capacity,
             Special=restaurant.Special,
-            ownerId=restaurant.OwnerId
+            ownerId=restaurant.OwnerId,
+            IsOpen=restaurant.IsOpen,
+            Rating=restaurant.Rating,
         };
     }
 
-    public async Task<List<ViewRestaurantDto>> SeeAllRestaurantsAsync()
+    public async Task<PagedResponseDto<ViewRestaurantDto>> SeeAllRestaurantsAsync(RestaurantQueryDto query)
     {
 
-    var restaurants=await _restaurantRepository.GetAllRestaurantsAsync();
+    var restaurants=await _restaurantRepository.
+                    GetAllRestaurantsAsync(query);
 
-    return restaurants.Select(r =>new ViewRestaurantDto
+    var restaurantDtos= restaurants.Items.Select(r =>new ViewRestaurantDto
     {
         Id=r.Id,
         Name=r.Name,
         Address=r.Address,
         Capacity=r.Capacity,
         Special=r.Special,
+        IsOpen=r.IsOpen,
+        Rating=r.Rating,
         ownerId=r.OwnerId
-    }).ToList();      
+    }).ToList();    
+
+    return new PagedResponseDto<ViewRestaurantDto>
+    {
+        Items=restaurantDtos,
+        Page=restaurants.Page,
+        PageSize=restaurants.PageSize,
+        TotalCount=restaurants.TotalCount,
+        TotalPages=restaurants.TotalPages
+    };
 
     }
 
@@ -107,6 +128,8 @@ public class RestaurantService : IRestaurantService
             Address=restaurant.Address,
             Capacity=restaurant.Capacity,
             Special=restaurant.Special,
+            IsOpen=restaurant.IsOpen,
+            Rating=restaurant.Rating,
             ownerId=restaurant.OwnerId
 
         };

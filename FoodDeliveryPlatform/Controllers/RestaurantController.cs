@@ -49,9 +49,9 @@ public class RestaurantController : ControllerBase
     }
 
     [HttpGet("View-all-restaurants")]
-    public async Task<IActionResult> ViewAllRestaurants()
+    public async Task<IActionResult> ViewAllRestaurants([FromQuery]RestaurantQueryDto query)
     {
-        var restaurants=await _restaurantService.SeeAllRestaurantsAsync();
+        var restaurants=await _restaurantService.SeeAllRestaurantsAsync(query);
         return Ok(restaurants);
     }
 
