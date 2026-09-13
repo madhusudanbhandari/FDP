@@ -106,13 +106,21 @@ public class MenuService : IMenuService
          }).ToList();
     }
 
-    public async Task<string?> DeleteMenuAsync(int id)
+    public async Task<string?> DeleteMenuAsync(int id,int ownerId)
     {
         var menu=await _menuRepository.GetMenuByIdAsync(id);
 
         if (menu == null)
         {
             throw new NotFoundException("Cannot find the menu");
+        }
+        if (menu.Restaurant == null)
+        {
+            throw new NotFoundException("Cannot find the restaurant");
+        }
+        if (menu.Restaurant.OwnerId != ownerId)
+        {
+            throw new InvalidOperationException("You did not own this restaurant");
         }
 
         await _menuRepository.RemoveAsync(menu);

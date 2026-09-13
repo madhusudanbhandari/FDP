@@ -4,9 +4,11 @@ using FDP.Interface;
 using FDP.Dtos.MenuItem;
 using System.IO.Pipelines;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FDP.Controller;
 
+[Authorize]
 [ApiController]
 [Route("api/[controller]")]
 public class MenuItemController : ControllerBase
@@ -17,6 +19,7 @@ public class MenuItemController : ControllerBase
         _menuItemService=menuItemService;
     }
 
+    [Authorize(Roles ="RestaurantOwner")]
     [HttpPost("create-menuItem")]
     public async Task<IActionResult>CreateMenuItemAsync(CreateMenuItemDto dto)
     {
@@ -30,6 +33,7 @@ public class MenuItemController : ControllerBase
         return Ok(menuItem);
     }
 
+    [Authorize(Roles ="RestaurantOwner")]
     [HttpPatch("update-menuItem")]
     public async Task<IActionResult> UpdateMenuItem(int id, UpdateMenuItemDto dto)
     {
@@ -57,6 +61,7 @@ public class MenuItemController : ControllerBase
         return Ok(items);
     }
 
+    [Authorize(Roles ="RestaurantOwner")]
     [HttpDelete("delete-menuItem")]
     public async Task<IActionResult> DeleteMenuItem(int id)
     {

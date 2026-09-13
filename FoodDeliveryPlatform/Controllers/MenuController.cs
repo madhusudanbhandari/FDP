@@ -51,10 +51,18 @@ public class MenuController : ControllerBase
         return Ok(menu);
     }
 
+    [Authorize(Roles ="RestaurantOwner")]
     [HttpDelete("delete-menu")]
     public async Task<IActionResult> DeleteMenuAsync(int id)
     {
-        var isDeleted=await _menuService.DeleteMenuAsync(id);
+        var claim=User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if(!int.TryParse(claim, out int Id))
+        {
+            return Unauthorized();
+        }
+
+
+        var isDeleted=await _menuService.DeleteMenuAsync(id,Id);
         return Ok(isDeleted);
     }
 

@@ -15,5 +15,6 @@ public class User
     public ROLES Role{get;set;}
 
     public ICollection<Restaurant> Restaurants{get;set;}=new List<Restaurant>();
+    public ICollection<Cart> Carts{get;set;}=new List<Cart>();
 
 }

@@ -1,4 +1,5 @@
 using AutoMapper;
+using FDP.Dtos.MenuItem;
 using FDP.Dtos.User;
 using FDP.Models;
 
@@ -15,5 +16,6 @@ public class UserProfile : Profile
                     dest=>dest.Token,
                     opt=>opt.Ignore()
                 );
+        CreateMap<MenuItem, ViewMenuItemDto>();
     }
 }
