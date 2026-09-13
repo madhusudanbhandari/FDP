@@ -16,6 +16,8 @@ public class AppDbContext : DbContext
     public DbSet<MenuItem> MenuItems{get;set;}
     public DbSet<Cart> Carts{get;set;}
     public DbSet<CartItem> CartItems{get;set;}
+    public DbSet<Order> Orders{get;set;}
+    public DbSet<OrderItem> OrderItems{get;set;}
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -47,6 +49,23 @@ public class AppDbContext : DbContext
             .WithMany()
             .HasForeignKey(ci=>ci.MenuItemId);
 
+        modelBuilder.Entity<Order>()
+            .HasOne(o=>o.User)
+            .WithMany(u=>u.Orders)
+            .HasForeignKey(o=>o.UserId)
+            .OnDelete(DeleteBehavior.Restrict);
+        
+        modelBuilder.Entity<Order>()
+            .HasMany(o=>o.OrderItems)
+            .WithOne(oi=>oi.Order)
+            .HasForeignKey(oi=>oi.OrderId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<OrderItem>()
+            .HasOne(oi=>oi.MenuItem)
+            .WithMany()
+            .HasForeignKey(oi=>oi.MenuItemId)
+            .OnDelete(DeleteBehavior.Restrict);
 
     }
 

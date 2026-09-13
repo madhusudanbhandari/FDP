@@ -1,5 +1,5 @@
 using AutoMapper;
-using FDP.Dtos;
+using FDP.Dtos.Cart;
 using FDP.Exceptions;
 using FDP.Interface;
 using FDP.Models;
@@ -55,7 +55,7 @@ public class CartService : ICartService
         return  _mapper.Map<ViewCartDto>(cart);
     }
 
-    public async Task<ViewCartDto> UpdateCartAsync(
+    public async Task<ViewCartItemDto> UpdateCartAsync(
         int userId,
         int cartItemId,
         UpdateCartItemDto dto
@@ -78,10 +78,10 @@ public class CartService : ICartService
         await _cartRepository.SaveChangesAsync();
         var cart=await _cartRepository.GetCartByUserIdAsync(userId);
 
-        return _mapper.Map<ViewCartDto> (cart);
+        return _mapper.Map<ViewCartItemDto> (cartItem);
     }
 
-    public async Task<ViewCartDto> RemoveCartItemAsync(int userId,  int cartItemId)
+    public async Task<string?> RemoveCartItemAsync(int userId,  int cartItemId)
     {
         var cartItem=await _cartRepository.GetCartItemAsync(cartItemId,userId);
 
@@ -97,8 +97,7 @@ public class CartService : ICartService
 
         var cart=await _cartRepository.GetCartByUserIdAsync(userId);
 
-        return _mapper.Map<ViewCartDto>(cart);
-
+        return "Item removed successfully";
 
     }
 

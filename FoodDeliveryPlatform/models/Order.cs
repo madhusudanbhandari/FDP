@@ -1,0 +1,17 @@
+using FDP.enums;
+using Microsoft.AspNetCore.SignalR;
+
+namespace FDP.Models;
+
+
+public class Order
+{
+    public int Id{get;set;}
+    public int UserId{get;set;}
+    public User User{get;set;}=null!;
+    public decimal TotalAmount{get;set;}
+    public OrderStatus Status{get;set;}
+    public DateTime CreatedAt{get;set;}
+    public List<OrderItem> OrderItems{get;set;}=new();
+
+}

@@ -1,5 +1,5 @@
 using System.Security.Claims;
-using FDP.Dtos;
+using FDP.Dtos.Cart;
 using FDP.Interface;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;

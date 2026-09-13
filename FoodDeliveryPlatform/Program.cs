@@ -83,6 +83,8 @@ builder.Services.AddScoped<IMenuRepository,MenuRepository>();
 builder.Services.AddScoped<IMenuService,MenuService>();
 builder.Services.AddScoped<IMenuItemRepository, MenuItemRepository>();
 builder.Services.AddScoped<IMenuItemService,MenuItemService>();
+builder.Services.AddScoped<ICartRepository,CartRepository>();
+builder.Services.AddScoped<ICartService, CartService>();
 
 builder.Services.AddAutoMapper(cfg =>
 {
