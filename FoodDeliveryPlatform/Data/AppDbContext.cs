@@ -18,6 +18,7 @@ public class AppDbContext : DbContext
     public DbSet<CartItem> CartItems{get;set;}
     public DbSet<Order> Orders{get;set;}
     public DbSet<OrderItem> OrderItems{get;set;}
+    public DbSet<Notification> Notifications{get;set;}
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -79,9 +80,12 @@ public class AppDbContext : DbContext
             .HasForeignKey(o=>o.RestaurantId)
             .OnDelete(DeleteBehavior.Restrict);
 
-
-        
-        
+        modelBuilder.Entity<Notification>()
+            .HasOne(n=>n.User)
+            .WithMany(n=>n.Notifications)
+            .HasForeignKey(n=>n.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
+            
 
     }
 

@@ -1,6 +1,7 @@
 using AutoMapper;
 using FDP.Dtos.Cart;
 using FDP.Dtos.MenuItem;
+using FDP.Dtos.Notification;
 using FDP.Dtos.Orders;
 using FDP.Dtos.User;
 using FDP.Models;
@@ -43,5 +44,6 @@ public class UserProfile : Profile
                     dest=>dest.SubTotal,
                     opt=>opt.MapFrom(src=>src.UnitPrice*src.Quantity)
                 );
+        CreateMap<Notification,ViewNotificationDto>();
     }
 }

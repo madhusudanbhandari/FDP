@@ -1,6 +1,7 @@
 using AutoMapper;
 using FDP.Data;
 using FDP.Dtos.Orders;
+using FDP.enums;
 using FDP.Exceptions;
 using FDP.Interface;
 using FDP.Models;
@@ -13,18 +14,21 @@ public class OrderService:IOrderService
     private readonly IOrderRepository _orderRepository;
     private readonly ICartRepository _cartRepository;
     private readonly IRestaurantRepository _restaurantRepository;
+    private readonly INotificationService _notificationService;
     private readonly AppDbContext _context;
     private readonly IMapper _mapper;
     public OrderService(IOrderRepository orderRepository,
         ICartRepository cartRepository,
         AppDbContext context,
         IRestaurantRepository restaurantRepository,
+        INotificationService notificationService,
         IMapper mapper
         )
     {
         _orderRepository=orderRepository;
         _cartRepository=cartRepository;
         _restaurantRepository=restaurantRepository;
+        _notificationService=notificationService;
         _context=context;
         _mapper=mapper;
 
@@ -152,10 +156,20 @@ public class OrderService:IOrderService
 
         if(order==null)
             throw new NotFoundException("Cannot find the order");
+        
+        if(!IsValidStatusTransition(order.Status, dto.orderStatus))
+        {
+            throw new BadRequestException($"Cannot change the order status from {order.Status} to {dto.orderStatus}");
+        }
 
         order.Status=dto.orderStatus;
 
         await _orderRepository.SaveChangesAsync();
+
+        await _notificationService.CreateNotificationAsync(
+            order.UserId,
+            $"Your order {order.Id} has been {order.Status.ToString().ToLower()}"
+        );
 
         return  _mapper.Map<ViewOrderDto>(order);
         
@@ -177,6 +191,29 @@ public class OrderService:IOrderService
         order.Status=enums.OrderStatus.Cancelled;
         await _orderRepository.SaveChangesAsync();
 
+    }
+
+    private bool IsValidStatusTransition(OrderStatus currentStatus, OrderStatus newStatus)
+    {
+        return currentStatus switch
+        {
+            OrderStatus.Pending=>
+                newStatus==OrderStatus.Confirmed ||
+                newStatus==OrderStatus.Cancelled,
+            
+            OrderStatus.Confirmed=>
+                newStatus==OrderStatus.Preparing ||
+                newStatus==OrderStatus.Cancelled,
+            
+            OrderStatus.Preparing=>
+                newStatus==OrderStatus.OutForDelivery,
+            
+            OrderStatus.Delivered=>false,
+
+            OrderStatus.Cancelled=>false,
+
+            _=>false
+        };
     }
 
 }
