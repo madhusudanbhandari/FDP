@@ -13,9 +13,8 @@ public class User
     public string Address{get;set;}=string.Empty;
     
     public ROLES Role{get;set;}
-
+    public Cart? Cart{get;set;}
     public ICollection<Restaurant> Restaurants{get;set;}=new List<Restaurant>();
-    public ICollection<Cart> Carts{get;set;}=new List<Cart>();
     public ICollection<Order> Orders{get;set;}=new List<Order>();
 
 }

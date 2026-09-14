@@ -30,7 +30,9 @@ public class UserProfile : Profile
                 .ForMember(
                     dest=>dest.Status,
                     opt=>opt.MapFrom(src=>src.Status.ToString())
-                );
+                )
+                .ForMember(dest=>dest.RestaurantName,
+                opt=>opt.MapFrom(src=>src.Restaurant.Name));
 
         CreateMap<OrderItem, ViewOrderItemDto>()
                 .ForMember(

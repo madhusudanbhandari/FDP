@@ -27,7 +27,8 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<Menu>()
             .HasOne(m=>m.Restaurant)
             .WithOne(r=>r.Menu)
-            .HasForeignKey<Menu>(m=>m.RestaurantId);
+            .HasForeignKey<Menu>(m=>m.RestaurantId)
+            .OnDelete(DeleteBehavior.Cascade);
 
         modelBuilder.Entity<MenuItem>()
             .HasOne(mi=>mi.Menu)
@@ -36,8 +37,9 @@ public class AppDbContext : DbContext
         
         modelBuilder.Entity<Cart>()
             .HasOne(c=>c.User)
-            .WithOne()
-            .HasForeignKey<Cart>(c=>c.UserId);
+            .WithOne(u=>u.Cart)
+            .HasForeignKey<Cart>(c=>c.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
         
         modelBuilder.Entity<CartItem>()
             .HasOne(ci=>ci.Cart)
@@ -70,6 +72,16 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<CartItem>()
             .HasIndex(ci=>new{ci.CartId,ci.MenuItemId})
             .IsUnique();
+        
+        modelBuilder.Entity<Order>()
+            .HasOne(o=>o.Restaurant)
+            .WithMany()
+            .HasForeignKey(o=>o.RestaurantId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+
+        
+        
 
     }
 

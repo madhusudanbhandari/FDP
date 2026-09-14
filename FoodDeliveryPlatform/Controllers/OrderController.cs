@@ -2,6 +2,8 @@ using System.Security.Claims;
 using FDP.Interface;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using FDP.Dtos.Orders;
+using FDP.Models;
 
 namespace FDP.Controller;
 
@@ -58,6 +60,45 @@ public class OrderController : ControllerBase
         var orders=await _orderService.GetMyOrdersAsync(userId);
 
         return Ok(orders);
+    }
+
+    [Authorize(Roles ="RestaurantOwner")]
+    [HttpGet("restaurant-orders")]
+    public async Task<IActionResult> GetOrdersByRestaurant()
+    {
+        var userId=int.Parse(
+            User.FindFirstValue(ClaimTypes.NameIdentifier)!
+        );
+
+        var order=await _orderService.GetOrdersOfMyRestaurant(userId);
+        return Ok(order);
+    }
+
+    [Authorize(Roles ="RestaurantOwner")]
+    [HttpPatch("update-order-status")]
+    public async Task<IActionResult> UpdateOrderStatus(int orderId, UpdateOrderStatusDto dto)
+    {
+        var userId=int.Parse(
+            User.FindFirstValue(ClaimTypes.NameIdentifier)!
+        );
+
+        var updated=await _orderService.UpdateOrderStatus(userId,orderId,dto);
+        return Ok(updated);
+    }
+
+    [HttpPatch("{orderId}/cancel")]
+    public async Task<IActionResult> CancelOrder(int orderId)
+    {
+        var userId=int.Parse(
+            User.FindFirstValue(ClaimTypes.NameIdentifier)!
+        );
+
+        await _orderService.CancelOrderAsync(orderId,userId);
+
+        return Ok(new
+        {
+            message="Order cancelled successfully"
+        });
     }
 
 }
