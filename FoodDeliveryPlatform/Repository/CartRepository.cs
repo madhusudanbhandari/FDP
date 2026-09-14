@@ -20,8 +20,7 @@ public class CartRepository : ICartRepository
                 .Include(c=>c.CartItems)
                 .FirstOrDefaultAsync(c=>c.UserId==userId); 
     }
-
-    
+       
     public async Task<CartItem?> GetCartItemAsync(int cartItemId,int userId)
     {
         return await _context.CartItems
@@ -29,6 +28,15 @@ public class CartRepository : ICartRepository
                 .FirstOrDefaultAsync(ci=>
                 ci.Id==cartItemId &&
                 ci.Cart.UserId==userId);
+    }
+
+    public async Task<CartItem?> GetCartItemByCartAndMenuItemAsync(int cartId,int menuItemId)
+    {
+        return await _context.CartItems
+            .FirstOrDefaultAsync(
+                ci=>ci.CartId==cartId &&
+                ci.MenuItemId==menuItemId
+            );
     }
     public void AddCart(Cart cart)
     {
@@ -43,6 +51,12 @@ public class CartRepository : ICartRepository
     public void  RemoveCartItem(CartItem cartItem)
     {
         _context.CartItems.Remove(cartItem);
+    }
+
+    public async Task DeleteCartAsync(Cart cart)
+    {
+        _context.Carts.Remove(cart);
+        await _context.SaveChangesAsync();
     }
 
     public async Task SaveChangesAsync()

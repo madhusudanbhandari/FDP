@@ -67,6 +67,10 @@ public class AppDbContext : DbContext
             .HasForeignKey(oi=>oi.MenuItemId)
             .OnDelete(DeleteBehavior.Restrict);
 
+        modelBuilder.Entity<CartItem>()
+            .HasIndex(ci=>new{ci.CartId,ci.MenuItemId})
+            .IsUnique();
+
     }
 
 }

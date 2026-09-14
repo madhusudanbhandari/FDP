@@ -32,7 +32,7 @@ public class CartService : ICartService
             await _cartRepository.SaveChangesAsync();
         }
 
-        var existingCartItem=await _cartRepository.GetCartItemAsync(cart.Id,dto.MenuItemId);
+        var existingCartItem=await _cartRepository.GetCartItemByCartAndMenuItemAsync(cart.Id,dto.MenuItemId);
 
         if (existingCartItem != null)
         {

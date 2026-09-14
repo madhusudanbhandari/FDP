@@ -1,5 +1,3 @@
-
-
 using FDP.Data;
 using FDP.Interface;
 using FDP.Models;
@@ -33,11 +31,11 @@ public class OrderRepository: IOrderRepository
 
     public async Task<List<Order>> GetOrderByUserIdAsync(int userId)
     {
-        return await _context.Orders
-            .Where(o=>o.UserId==userId)
-            .Include(o=>o.OrderItems)
-                .ThenInclude(oi=>oi.MenuItem)
-            .OrderByDescending(o=>o.CreatedAt)
-            .ToListAsync();
+        return await _context.Orders 
+                .Where(o=>o.UserId==userId)
+                .Include(o=>o.OrderItems)
+                    .ThenInclude(oi=>oi.MenuItem)
+                .OrderByDescending(o=>o.CreatedAt)
+                .ToListAsync();
     }
 }
