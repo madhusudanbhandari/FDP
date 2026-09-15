@@ -16,4 +16,6 @@ public class Restaurant
     public User? RestaurantOwner{get;set;}
 
     public Menu? Menu{get;set;}
+
+    public ICollection<Review> Reviews{get;set;}=new List<Review>();
 }

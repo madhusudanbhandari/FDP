@@ -19,6 +19,7 @@ public class AppDbContext : DbContext
     public DbSet<Order> Orders{get;set;}
     public DbSet<OrderItem> OrderItems{get;set;}
     public DbSet<Notification> Notifications{get;set;}
+    public DbSet<Review> Reviews{get;set;}
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -85,8 +86,28 @@ public class AppDbContext : DbContext
             .WithMany(n=>n.Notifications)
             .HasForeignKey(n=>n.UserId)
             .OnDelete(DeleteBehavior.Cascade);
-            
 
+        modelBuilder.Entity<Review>()
+            .HasOne(r=>r.User)
+            .WithMany(r=>r.Reviews)
+            .HasForeignKey(r=>r.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
+        
+        modelBuilder.Entity<Review>()
+            .HasOne(r=>r.Restaurant)
+            .WithMany(r=>r.Reviews)
+            .HasForeignKey(r=>r.RestaurantId)
+            .OnDelete(DeleteBehavior.Cascade);
+        
+        modelBuilder.Entity<Review>()
+            .HasOne(r=>r.Order)
+            .WithMany()
+            .HasForeignKey(r=>r.OrderId)
+            .OnDelete(DeleteBehavior.Cascade); 
+
+        modelBuilder.Entity<Review>()
+            .HasIndex(r=>new{r.UserId,r.OrderId})
+            .IsUnique();
     }
 
 }

@@ -191,6 +191,11 @@ public class OrderService:IOrderService
         order.Status=enums.OrderStatus.Cancelled;
         await _orderRepository.SaveChangesAsync();
 
+        await _notificationService.CreateNotificationAsync(
+            order.UserId,
+            $"Yout order {order.Id} has been cancelled"
+        );
+
     }
 
     private bool IsValidStatusTransition(OrderStatus currentStatus, OrderStatus newStatus)

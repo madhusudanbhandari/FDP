@@ -1,19 +1,24 @@
 using AutoMapper;
 using FDP.Dtos.Notification;
 using FDP.Exceptions;
+using FDP.Hubs;
 using FDP.Interface;
 using FDP.Models;
+using Microsoft.AspNetCore.SignalR;
 
 namespace FDP.Services;
 
 public class NotificationService:INotificationService
 {
     private readonly INotificationRepository _notificationRepository;
+    private readonly IHubContext<NotificationHub> _hubContext;
     private readonly IMapper _mapper;
 
-    public NotificationService(INotificationRepository notificationRepository,IMapper mapper)
+    public NotificationService(INotificationRepository notificationRepository,IMapper mapper,
+                                IHubContext<NotificationHub> hubContext)
     {
         _notificationRepository=notificationRepository;
+        _hubContext=hubContext;
         _mapper=mapper;
     }
 
@@ -49,5 +54,14 @@ public class NotificationService:INotificationService
 
          _notificationRepository.AddNotification(notification);
          await _notificationRepository.SaveChangesAsync();
+
+         await _hubContext.Clients.User(userId.ToString())
+                .SendAsync("ReceiveNotification", new
+                {
+                    notification.Id,
+                    notification.Message,
+                    notification.IsRead,
+                    notification.CreatedAt
+                });
     }
 }

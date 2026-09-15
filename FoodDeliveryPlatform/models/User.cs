@@ -17,4 +17,5 @@ public class User
     public ICollection<Restaurant> Restaurants{get;set;}=new List<Restaurant>();
     public ICollection<Order> Orders{get;set;}=new List<Order>();
     public ICollection<Notification> Notifications{get;set;}=new List<Notification>();
+    public ICollection<Review> Reviews{get;set;}=new List<Review>();
 }

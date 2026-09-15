@@ -15,6 +15,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
 using AutoMapper;
+using FDP.Hubs;
 
 
 var builder=WebApplication.CreateBuilder(args);
@@ -50,6 +51,24 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                         ValidateLifetime=true,
 
                         ClockSkew=TimeSpan.Zero
+                    };
+
+                    options.Events=new JwtBearerEvents
+                    {
+                        OnMessageReceived = context =>
+                        {
+                            var accessToken=context.Request.Query["access_token"];
+
+                            var path=context.HttpContext.Request.Path;
+
+                            if(!string.IsNullOrEmpty(accessToken)&&
+                                path.StartsWithSegments("/notificationHub"))
+                            {
+                                context.Token=accessToken;
+                            }
+
+                            return Task.CompletedTask;
+                        }
                     };
                 });
 
@@ -89,12 +108,15 @@ builder.Services.AddScoped<IOrderRepository,OrderRepository>();
 builder.Services.AddScoped<IOrderService,OrderService>();
 builder.Services.AddScoped<INotificationRepository,NotificationRepository>();
 builder.Services.AddScoped<INotificationService,NotificationService>();
-
+builder.Services.AddScoped<IReviewRepository, ReviewRepository>();
+builder.Services.AddScoped<IReviewService,ReviewService>();
 
 builder.Services.AddAutoMapper(cfg =>
 {
     cfg.AddProfile<UserProfile>();
 });
+
+builder.Services.AddSignalR();
 
 var app=builder.Build();
 
@@ -110,6 +132,8 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapHub<NotificationHub>("/notificationHub");
 
 // app.UseHttpsRedirection();
 
