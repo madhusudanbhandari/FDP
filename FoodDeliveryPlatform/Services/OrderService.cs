@@ -15,6 +15,7 @@ public class OrderService:IOrderService
     private readonly ICartRepository _cartRepository;
     private readonly IRestaurantRepository _restaurantRepository;
     private readonly INotificationService _notificationService;
+    private readonly IDeliveryRepository _deliveryRepository;
     private readonly AppDbContext _context;
     private readonly IMapper _mapper;
     public OrderService(IOrderRepository orderRepository,
@@ -22,6 +23,7 @@ public class OrderService:IOrderService
         AppDbContext context,
         IRestaurantRepository restaurantRepository,
         INotificationService notificationService,
+        IDeliveryRepository deliveryRepository,
         IMapper mapper
         )
     {
@@ -29,6 +31,7 @@ public class OrderService:IOrderService
         _cartRepository=cartRepository;
         _restaurantRepository=restaurantRepository;
         _notificationService=notificationService;
+        _deliveryRepository=deliveryRepository;
         _context=context;
         _mapper=mapper;
 
@@ -164,6 +167,23 @@ public class OrderService:IOrderService
 
         order.Status=dto.orderStatus;
 
+        if (dto.orderStatus == OrderStatus.ReadyForPickup)
+        {
+            var existingDelivery=await _deliveryRepository.GetByOrderIdAsync(order.Id);
+
+            if (existingDelivery == null)
+            {
+                var delivery=new Delivery
+                {
+                    OrderId=order.Id,
+                    DeliveryStatus=DeliveryStatus.Pending
+                };
+
+                await _deliveryRepository.AddAsync(delivery);
+            }
+
+        }
+
         await _orderRepository.SaveChangesAsync();
 
         await _notificationService.CreateNotificationAsync(
@@ -211,7 +231,7 @@ public class OrderService:IOrderService
                 newStatus==OrderStatus.Cancelled,
             
             OrderStatus.Preparing=>
-                newStatus==OrderStatus.OutForDelivery,
+                newStatus==OrderStatus.ReadyForPickup,
             
             OrderStatus.Delivered=>false,
 

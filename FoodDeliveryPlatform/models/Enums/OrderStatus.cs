@@ -5,7 +5,7 @@ public enum OrderStatus
     Pending,
     Confirmed,
     Preparing,
-    OutForDelivery,
+    ReadyForPickup,
     Delivered,
     Cancelled
 }

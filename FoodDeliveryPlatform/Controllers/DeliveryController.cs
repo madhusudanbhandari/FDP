@@ -18,7 +18,7 @@ public class DeliveryController : ControllerBase
         _deliveryService = deliveryService;
     }
 
-    // ADMIN
+    
     [HttpGet]
     [Authorize(Roles = "Admin")]
     public async Task<IActionResult> GetAll()
@@ -28,7 +28,7 @@ public class DeliveryController : ControllerBase
         return Ok(deliveries);
     }
 
-    // ADMIN
+    
     [HttpGet("{id}")]
     [Authorize(Roles = "Admin")]
     public async Task<IActionResult> GetById(int id)
@@ -41,7 +41,7 @@ public class DeliveryController : ControllerBase
         return Ok(delivery);
     }
 
-    // ADMIN
+    
     [HttpPost("{id}/assign")]
     [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Assign(
@@ -58,7 +58,6 @@ public class DeliveryController : ControllerBase
         });
     }
 
-    // DELIVERY PERSON
     [HttpGet("my")]
     [Authorize(Roles = "DeliveryPerson")]
     public async Task<IActionResult> GetMyDeliveries()
@@ -71,7 +70,6 @@ public class DeliveryController : ControllerBase
         return Ok(deliveries);
     }
 
-    // DELIVERY PERSON
     [HttpPatch("{id}/pickup")]
     [Authorize(Roles = "DeliveryPerson")]
     public async Task<IActionResult> Pickup(int id)
@@ -88,7 +86,6 @@ public class DeliveryController : ControllerBase
         });
     }
 
-    // DELIVERY PERSON
     [HttpPatch("{id}/out-for-delivery")]
     [Authorize(Roles = "DeliveryPerson")]
     public async Task<IActionResult> OutForDelivery(int id)
@@ -105,7 +102,7 @@ public class DeliveryController : ControllerBase
         });
     }
 
-    // DELIVERY PERSON
+    
     [HttpPatch("{id}/delivered")]
     [Authorize(Roles = "DeliveryPerson")]
     public async Task<IActionResult> Delivered(int id)
@@ -122,7 +119,7 @@ public class DeliveryController : ControllerBase
         });
     }
 
-    // CUSTOMER
+    
     [HttpGet("order/{orderId}")]
     [Authorize]
     public async Task<IActionResult> GetByOrder(
