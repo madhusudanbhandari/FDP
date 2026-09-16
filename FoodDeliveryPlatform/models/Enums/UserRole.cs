@@ -6,5 +6,5 @@ public enum ROLES
     Customer,
     Admin,
     RestaurantOwner,
-    DeliveryRider
+    DeliveryPerson
 }

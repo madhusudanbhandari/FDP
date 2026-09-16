@@ -1,5 +1,6 @@
 using AutoMapper;
 using FDP.Dtos.Cart;
+using FDP.Dtos.Delivery;
 using FDP.Dtos.MenuItem;
 using FDP.Dtos.Notification;
 using FDP.Dtos.Orders;
@@ -49,6 +50,7 @@ public class UserProfile : Profile
         CreateMap<Notification,ViewNotificationDto>();
         CreateMap<Review, ViewReviewDto>();
         CreateMap<Payment,ViewPaymentDto>();
+        CreateMap<Delivery, ViewDeliveryDto>();
                 
     }
 }

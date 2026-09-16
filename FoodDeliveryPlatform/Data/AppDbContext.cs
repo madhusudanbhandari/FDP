@@ -21,6 +21,7 @@ public class AppDbContext : DbContext
     public DbSet<Notification> Notifications{get;set;}
     public DbSet<Review> Reviews{get;set;}
     public DbSet<Payment> Payments{get;set;}
+    public DbSet<Delivery> Deliveries{get;set;}
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -123,6 +124,26 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<Payment>()
             .HasIndex(p=>p.OrderId)
             .IsUnique();
+
+        modelBuilder.Entity<Delivery>()
+            .HasOne(d=>d.Order)
+            .WithOne(o=>o.Delivery)
+            .HasForeignKey<Delivery>(d=>d.OrderId)
+            .OnDelete(DeleteBehavior.Cascade);
+        
+        modelBuilder.Entity<Delivery>()
+            .HasOne(d=>d.User)
+            .WithMany()
+            .HasForeignKey(d=>d.DeliveryPersonId)
+            .OnDelete(DeleteBehavior.SetNull);
+
+        modelBuilder.Entity<Delivery>()
+            .HasIndex(d=>d.DeliveryPersonId);
+        
+        modelBuilder.Entity<Delivery>()
+            .HasIndex(d=>d.DeliveryStatus);
+            
+            
     }
 
 }

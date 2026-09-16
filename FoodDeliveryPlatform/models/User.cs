@@ -19,4 +19,5 @@ public class User
     public ICollection<Notification> Notifications{get;set;}=new List<Notification>();
     public ICollection<Review> Reviews{get;set;}=new List<Review>();
     public ICollection<Payment> Payments{get;set;}=new List<Payment>();
+    public Delivery? Delivery{get;set;}
 }

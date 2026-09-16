@@ -113,6 +113,8 @@ builder.Services.AddScoped<IReviewService,ReviewService>();
 builder.Services.AddScoped<IPaymentRepository,PaymentRepository>();
 builder.Services.AddScoped<IPaymentService,PaymentService>();
 builder.Services.AddScoped<IPaymentProvider,MockPaymentProvider>();
+builder.Services.AddScoped<IDeliveryRepository,DeliveryRepository>();
+builder.Services.AddScoped<IDeliveryService,DeliveryService>();
 
 builder.Services.AddAutoMapper(cfg =>
 {
