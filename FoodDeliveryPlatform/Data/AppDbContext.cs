@@ -20,6 +20,7 @@ public class AppDbContext : DbContext
     public DbSet<OrderItem> OrderItems{get;set;}
     public DbSet<Notification> Notifications{get;set;}
     public DbSet<Review> Reviews{get;set;}
+    public DbSet<Payment> Payments{get;set;}
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -107,6 +108,20 @@ public class AppDbContext : DbContext
 
         modelBuilder.Entity<Review>()
             .HasIndex(r=>new{r.UserId,r.OrderId})
+            .IsUnique();
+
+        modelBuilder.Entity<Order>()
+            .HasOne(o=>o.Payment)
+            .WithOne(p=>p.Order)
+            .HasForeignKey<Payment>(p=> p.OrderId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<Payment>()
+            .Property(p=>p.Amount)
+            .HasPrecision(18,2);
+        
+        modelBuilder.Entity<Payment>()
+            .HasIndex(p=>p.OrderId)
             .IsUnique();
     }
 

@@ -15,5 +15,5 @@ public class Order
     public int RestaurantId{get;set;}
     public Restaurant Restaurant{get;set;}=null!;
     public List<OrderItem> OrderItems{get;set;}=new();
-
+    public Payment? Payment{get;set;}
 }
