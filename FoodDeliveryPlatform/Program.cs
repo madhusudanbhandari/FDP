@@ -16,7 +16,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
 using AutoMapper;
 using FDP.Hubs;
-
+using StackExchange.Redis;
 
 var builder=WebApplication.CreateBuilder(args);
 
@@ -94,6 +94,7 @@ builder.Services.AddSwaggerGen(options =>
 
 });
 
+
 builder.Services.AddScoped<IAuthService,AuthService>();
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 builder.Services.AddScoped<IRestaurantRepository,RestaurantRepository>();
@@ -115,6 +116,18 @@ builder.Services.AddScoped<IPaymentService,PaymentService>();
 builder.Services.AddScoped<IPaymentProvider,MockPaymentProvider>();
 builder.Services.AddScoped<IDeliveryRepository,DeliveryRepository>();
 builder.Services.AddScoped<IDeliveryService,DeliveryService>();
+
+builder.Services.AddSingleton<ConnectionMultiplexer>(sp =>
+{
+    var connectionString=builder.Configuration["Redis:ConnectionString"];
+
+    return ConnectionMultiplexer.Connect(connectionString!);
+});
+
+
+builder.Services.AddScoped<IRedisService, RedisService>();
+
+
 
 builder.Services.AddAutoMapper(cfg =>
 {

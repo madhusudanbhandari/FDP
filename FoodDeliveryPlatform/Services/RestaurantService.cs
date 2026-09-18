@@ -3,18 +3,18 @@ using FDP.Dtos.Restaurant;
 using FDP.Exceptions;
 using FDP.Interface;
 using FDP.Models;
-using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace FDP.Services;
 
 public class RestaurantService : IRestaurantService
 {
     private readonly IRestaurantRepository _restaurantRepository;
+    private readonly IRedisService _redis;
 
-    public RestaurantService(IRestaurantRepository restaurantRepository)
+    public RestaurantService(IRestaurantRepository restaurantRepository,IRedisService redis)
     {
         _restaurantRepository=restaurantRepository;
+        _redis=redis;
     }
 
     public async Task<ViewRestaurantDto> CreateRestaurantAsync(CreateRestaurantDto dto,int ownerId)
@@ -85,32 +85,55 @@ public class RestaurantService : IRestaurantService
 
     public async Task<PagedResponseDto<ViewRestaurantDto>> SeeAllRestaurantsAsync(RestaurantQueryDto query)
     {
+        string cacheKey=$"fdp:restaurants:"+
+                        $"p{query.Page}:"+
+                        $"ps{query.PageSize}:"+
+                        $"search={query.Search}:"+
+                        $"open={query.IsOpen}:"+
+                        $"sort={query.SortBy}:"+
+                        $"order={query.SortOrder}";
 
-    var restaurants=await _restaurantRepository.
-                    GetAllRestaurantsAsync(query);
+        //will get fdp:restaurants:p1:ps10:search=momoshop:open=True:sort=rating:order=desc
 
-    var restaurantDtos= restaurants.Items.Select(r =>new ViewRestaurantDto
-    {
-        Id=r.Id,
-        Name=r.Name,
-        Address=r.Address,
-        Capacity=r.Capacity,
-        Special=r.Special,
-        IsOpen=r.IsOpen,
-        Rating=r.Rating,
-        ownerId=r.OwnerId
-    }).ToList();    
+        //it will check for cache hit
+        var cachedRestaurants=await _redis.GetAsync<PagedResponseDto<ViewRestaurantDto>>(cacheKey);
 
-    return new PagedResponseDto<ViewRestaurantDto>
-    {
-        Items=restaurantDtos,
-        Page=restaurants.Page,
-        PageSize=restaurants.PageSize,
-        TotalCount=restaurants.TotalCount,
-        TotalPages=restaurants.TotalPages
-    };
+        if(cachedRestaurants is not null)
+            {
+                return cachedRestaurants;
+            }
 
-    }
+        //for cache miss
+        var restaurants=await _restaurantRepository.
+                        GetAllRestaurantsAsync(query);
+
+        
+        var restaurantDtos= restaurants.Items.Select(r =>new ViewRestaurantDto
+        {
+            Id=r.Id,
+            Name=r.Name,
+            Address=r.Address,
+            Capacity=r.Capacity,
+            Special=r.Special,
+            IsOpen=r.IsOpen,
+            Rating=r.Rating,
+            ownerId=r.OwnerId
+        }).ToList();    
+
+        var response= new PagedResponseDto<ViewRestaurantDto>
+        {
+            Items=restaurantDtos,
+            Page=restaurants.Page,
+            PageSize=restaurants.PageSize,
+            TotalCount=restaurants.TotalCount,
+            TotalPages=restaurants.TotalPages
+        };
+
+        await _redis.SetAsync(cacheKey,response);
+
+        return response;
+
+        }
 
     public async Task<ViewRestaurantDto?> SeeRestaurantAsync(int id)
     {
