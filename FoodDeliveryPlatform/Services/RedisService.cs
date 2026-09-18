@@ -10,9 +10,9 @@ public class RedisService : IRedisService
     private static readonly JsonSerializerOptions jsonOptions=new (JsonSerializerDefaults.Web);
 
 
-    public RedisService(IDatabase database)
+    public RedisService(ConnectionMultiplexer database)
     {
-        _database=database;
+        _database=database.GetDatabase();
     }
 
     public async Task SetAsync<T>(string key, T value,TimeSpan? expiry = null)
@@ -49,5 +49,22 @@ public class RedisService : IRedisService
     public async Task<bool> ExistsAsync(string key)
     {
         return await _database.KeyExistsAsync(key);
+    }
+
+    public async Task RemoveByPatternAsync(string pattern)
+    {
+        var endpoints=_database.Multiplexer.GetEndPoints();
+
+        foreach(var endpoint in endpoints)
+        {
+            var server=_database.Multiplexer.GetServer(endpoint);
+
+            var keys=server.Keys(pattern:pattern);
+
+            foreach(var key in keys)
+            {
+                await _database.KeyDeleteAsync(key);
+            }
+        }
     }
 }

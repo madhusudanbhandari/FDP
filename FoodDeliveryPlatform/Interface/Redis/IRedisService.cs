@@ -9,4 +9,6 @@ public interface IRedisService
     Task<bool> DeleteAsync(string key);
     Task<bool> ExistsAsync(string key);
 
+    Task RemoveByPatternAsync(string pattern);
+
 } 

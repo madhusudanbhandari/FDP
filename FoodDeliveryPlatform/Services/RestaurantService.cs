@@ -33,6 +33,8 @@ public class RestaurantService : IRestaurantService
         await _restaurantRepository.AddAsync(restaurant);
         await _restaurantRepository.SaveChangesAsync();
 
+        await _redis.RemoveByPatternAsync("fdp:restaurants:*");
+
         return new ViewRestaurantDto
         {
             Id=restaurant.Id,
@@ -45,10 +47,12 @@ public class RestaurantService : IRestaurantService
             Rating=restaurant.Rating,
             
         };
+
     }
 
     public async Task<ViewRestaurantDto?> UpdateRestaurantAsync(int id, UpdateRestaurantDto dto,int ownerId)
     {
+
         var restaurant=await _restaurantRepository.GetRestaurantByIdAsync(id);
 
         if(restaurant == null)
@@ -69,6 +73,9 @@ public class RestaurantService : IRestaurantService
         restaurant.Rating=dto.Rating;
 
         await _restaurantRepository.SaveChangesAsync();
+
+        await _redis.DeleteAsync($"fdp:restaurant:{id}");
+        await _redis.RemoveByPatternAsync("fdp:restaurants:*");
 
         return new ViewRestaurantDto
         {
@@ -129,7 +136,7 @@ public class RestaurantService : IRestaurantService
             TotalPages=restaurants.TotalPages
         };
 
-        await _redis.SetAsync(cacheKey,response);
+        await _redis.SetAsync(cacheKey,response,TimeSpan.FromMinutes(10));
 
         return response;
 
@@ -137,6 +144,15 @@ public class RestaurantService : IRestaurantService
 
     public async Task<ViewRestaurantDto?> SeeRestaurantAsync(int id)
     {
+        string cacheKey=$"fdp:restaurant:{id}";
+
+        var cachedRestaurant=await _redis.GetAsync<ViewRestaurantDto>(cacheKey);
+
+        if(cachedRestaurant is not null)
+        {
+            return cachedRestaurant;
+        }
+
         var restaurant= await _restaurantRepository.GetRestaurantByIdAsync(id);
 
         if (restaurant== null)
@@ -144,7 +160,7 @@ public class RestaurantService : IRestaurantService
             throw new NotFoundException("Restaurant not found");
         }
 
-        return new ViewRestaurantDto
+        var response= new ViewRestaurantDto
         {
             Id=restaurant.Id,
             Name=restaurant.Name,
@@ -156,6 +172,11 @@ public class RestaurantService : IRestaurantService
             ownerId=restaurant.OwnerId
 
         };
+
+        await _redis.SetAsync(cacheKey,response,TimeSpan.FromMinutes(10));
+
+        return response;
+
     }
     public async Task<string?> DeleteRestaurantAsync(int id,int ownerId)
     {
@@ -173,6 +194,9 @@ public class RestaurantService : IRestaurantService
 
         await _restaurantRepository.RemoveAsync(restaurant);
         await _restaurantRepository.SaveChangesAsync();
+
+        await _redis.DeleteAsync($"fdp:restaurant:{id}");
+        await _redis.RemoveByPatternAsync("fdp:restaurants:*");
 
         return "Deleted successfully";
     }

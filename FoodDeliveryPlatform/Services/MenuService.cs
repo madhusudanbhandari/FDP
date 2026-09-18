@@ -9,10 +9,12 @@ public class MenuService : IMenuService
 {
     private readonly IMenuRepository _menuRepository;
     private readonly IRestaurantRepository _restaurantRepository;
-    public MenuService(IMenuRepository menuRepository,IRestaurantRepository restaurantRepository)
+     private readonly IRedisService _redis;
+    public MenuService(IMenuRepository menuRepository,IRestaurantRepository restaurantRepository,IRedisService redis)
     {
         _menuRepository=menuRepository;
         _restaurantRepository=restaurantRepository;
+        _redis=redis;
     }
 
     public async Task <ViewMenuDto> CreateMenuAsync(int restaurantId,int ownerId)
@@ -79,12 +81,23 @@ public class MenuService : IMenuService
 
     public async Task<ViewMenuDto?> GetMenuByIdAsync(int id)
     {
+        var cacheKey=$"fdp:restaurant:{id}:menu";
+
+        var cachedMenu=await _redis.GetAsync<ViewMenuDto?>(cacheKey);
+
+        if(cachedMenu is not null)
+        {
+            return cachedMenu;
+        }
+
         var menu=await _menuRepository.GetMenuByIdAsync(id);
 
         if (menu == null)
         {
             throw new NotFoundException("Cannot find the menu");
         }
+
+        await _redis.SetAsync(cacheKey,menu,TimeSpan.FromMinutes(5));
 
         return new ViewMenuDto
          {
@@ -96,7 +109,18 @@ public class MenuService : IMenuService
 
     public async Task<List<ViewMenuDto>> GetAllMenusAsync()
     {
+        string cacheKey=$"fdp:restaurant:menu";
+
+        var cachedMenu=await _redis.GetAsync<List<ViewMenuDto>>(cacheKey);
+
+        if(cachedMenu is not null)
+        {
+            return cachedMenu;
+        }
+
         var menus=await _menuRepository.GetAllMenusAsync();
+
+        await _redis.SetAsync(cacheKey,menus,TimeSpan.FromMinutes(10));
 
         return menus.Select(menu=>new ViewMenuDto
          {
