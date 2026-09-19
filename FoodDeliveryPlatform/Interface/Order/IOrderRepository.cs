@@ -12,4 +12,6 @@ public interface IOrderRepository
     Task<Order?> GetOrderForOwnerAsync(int orderId, int ownerId);
     Task<Order?> GetOrderForCustomerAsync(int oderId, int userId);
     Task SaveChangesAsync();
+
+    Task <List<Order>> GetExpiredPendingOrdersAsync();
 }

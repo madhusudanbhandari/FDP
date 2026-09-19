@@ -141,6 +141,8 @@ builder.Services.AddSingleton<ConnectionMultiplexer>(sp =>
 
 builder.Services.AddScoped<IRedisService, RedisService>();
 
+builder.Services.AddHostedService<OrderCleanupService>();
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("ReactFrontend", policy =>

@@ -2,6 +2,7 @@ using FDP.Data;
 using FDP.Interface;
 using FDP.Models;
 using Microsoft.EntityFrameworkCore;
+using FDP.enums;
 
 namespace FDP.Repository;
 
@@ -69,5 +70,19 @@ public class OrderRepository: IOrderRepository
     public Task SaveChangesAsync()
     {
       return _context.SaveChangesAsync();
+    }
+
+    public async Task<List<Order>> GetExpiredPendingOrdersAsync()
+    {
+        var cutoffTime=DateTime.UtcNow.AddMinutes(-15);
+
+        return await _context.Orders
+                .Include(o=>o.Payment)
+                .Where(o=>
+                o.Status==enums.OrderStatus.Pending &&
+                o.Payment!=null &&
+                o.Payment.PaymentStatus==enums.PaymentStatus.Pending &&
+                o.CreatedAt<= cutoffTime)
+                .ToListAsync();
     }
 }
