@@ -3,17 +3,20 @@ using FDP.Dtos.Restaurant;
 using FDP.Exceptions;
 using FDP.Interface;
 using FDP.Models;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace FDP.Services;
 
 public class RestaurantService : IRestaurantService
 {
     private readonly IRestaurantRepository _restaurantRepository;
+    private readonly ILogger<RestaurantService> _logger;
     private readonly IRedisService _redis;
 
-    public RestaurantService(IRestaurantRepository restaurantRepository,IRedisService redis)
+    public RestaurantService(IRestaurantRepository restaurantRepository,ILogger<RestaurantService> logger,IRedisService redis)
     {
         _restaurantRepository=restaurantRepository;
+        _logger=logger;
         _redis=redis;
     }
 
@@ -114,7 +117,8 @@ public class RestaurantService : IRestaurantService
         var restaurants=await _restaurantRepository.
                         GetAllRestaurantsAsync(query);
 
-        
+        _logger.LogInformation("Getting restaurants. Page:{Page}, PageSize:{PageSize}",query.Page,query.PageSize);
+
         var restaurantDtos= restaurants.Items.Select(r =>new ViewRestaurantDto
         {
             Id=r.Id,

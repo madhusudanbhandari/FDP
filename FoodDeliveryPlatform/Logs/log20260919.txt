@@ -1,0 +1,43 @@
+2026-09-19 09:56:35.267 +05:45 [INF] User profile is available. Using '/Users/madhusudanbhandari/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2026-09-19 09:56:35.312 +05:45 [INF] Now listening on: http://localhost:5107
+2026-09-19 09:56:35.312 +05:45 [INF] Application started. Press Ctrl+C to shut down.
+2026-09-19 09:56:35.312 +05:45 [INF] Hosting environment: Development
+2026-09-19 09:56:35.312 +05:45 [INF] Content root path: /Users/madhusudanbhandari/Desktop/FDS/FDP/FoodDeliveryPlatform
+2026-09-19 09:56:56.105 +05:45 [INF] Request starting HTTP/1.1 GET http://localhost:5107/api/Restaurant/View-all-restaurants - null null
+2026-09-19 09:56:56.165 +05:45 [INF] Executing endpoint 'FDP.Controller.RestaurantController.ViewAllRestaurants (FoodDeliveryPlatform)'
+2026-09-19 09:56:56.172 +05:45 [INF] Route matched with {action = "ViewAllRestaurants", controller = "Restaurant"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] ViewAllRestaurants(FDP.Dtos.Restaurant.RestaurantQueryDto) on controller FDP.Controller.RestaurantController (FoodDeliveryPlatform).
+2026-09-19 09:56:56.266 +05:45 [INF] Executing OkObjectResult, writing value of type 'FDP.Dtos.Common.PagedResponseDto`1[[FDP.Dtos.Restaurant.ViewRestaurantDto, FoodDeliveryPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-09-19 09:56:56.269 +05:45 [INF] Executed action FDP.Controller.RestaurantController.ViewAllRestaurants (FoodDeliveryPlatform) in 96.2245ms
+2026-09-19 09:56:56.269 +05:45 [INF] Executed endpoint 'FDP.Controller.RestaurantController.ViewAllRestaurants (FoodDeliveryPlatform)'
+2026-09-19 09:56:56.270 +05:45 [INF] Request finished HTTP/1.1 GET http://localhost:5107/api/Restaurant/View-all-restaurants - 200 null application/json; charset=utf-8 166.6744ms
+2026-09-19 10:22:01.110 +05:45 [INF] Request starting HTTP/1.1 GET http://localhost:5107/api/Restaurant/View-all-restaurants?Page=1&PageSize=10&Search=momo&IsOpen=true - null null
+2026-09-19 10:22:01.116 +05:45 [INF] Executing endpoint 'FDP.Controller.RestaurantController.ViewAllRestaurants (FoodDeliveryPlatform)'
+2026-09-19 10:22:01.117 +05:45 [INF] Route matched with {action = "ViewAllRestaurants", controller = "Restaurant"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] ViewAllRestaurants(FDP.Dtos.Restaurant.RestaurantQueryDto) on controller FDP.Controller.RestaurantController (FoodDeliveryPlatform).
+2026-09-19 10:22:01.492 +05:45 [INF] Executed DbCommand (25ms) [Parameters=[@Format='?', @query_IsOpen_Value='?' (DbType = Boolean)], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM "Restaurants" AS r
+WHERE r."Name" ILIKE @Format ESCAPE '' AND r."IsOpen" = @query_IsOpen_Value
+2026-09-19 10:22:01.512 +05:45 [INF] Executed DbCommand (1ms) [Parameters=[@Format='?', @query_IsOpen_Value='?' (DbType = Boolean), @p4='?' (DbType = Int32), @p='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT r."Id", r."Address", r."Capacity", r."IsOpen", r."Name", r."OwnerId", r."Rating", r."RestaurantOwnerId", r."Special"
+FROM "Restaurants" AS r
+WHERE r."Name" ILIKE @Format ESCAPE '' AND r."IsOpen" = @query_IsOpen_Value
+ORDER BY r."Id"
+LIMIT @p4 OFFSET @p
+2026-09-19 10:22:01.513 +05:45 [INF] Getting restaurants. Page:1, PageSize:10
+2026-09-19 10:22:01.515 +05:45 [INF] Executing OkObjectResult, writing value of type 'FDP.Dtos.Common.PagedResponseDto`1[[FDP.Dtos.Restaurant.ViewRestaurantDto, FoodDeliveryPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-09-19 10:22:01.516 +05:45 [INF] Executed action FDP.Controller.RestaurantController.ViewAllRestaurants (FoodDeliveryPlatform) in 398.8496ms
+2026-09-19 10:22:01.516 +05:45 [INF] Executed endpoint 'FDP.Controller.RestaurantController.ViewAllRestaurants (FoodDeliveryPlatform)'
+2026-09-19 10:22:01.517 +05:45 [INF] Request finished HTTP/1.1 GET http://localhost:5107/api/Restaurant/View-all-restaurants?Page=1&PageSize=10&Search=momo&IsOpen=true - 200 null application/json; charset=utf-8 407.4797ms
+2026-09-19 10:22:20.596 +05:45 [INF] Request starting HTTP/1.1 GET http://localhost:5107/api/Restaurant/View-all-restaurants?Page=1&PageSize=10 - null null
+2026-09-19 10:22:20.600 +05:45 [INF] Executing endpoint 'FDP.Controller.RestaurantController.ViewAllRestaurants (FoodDeliveryPlatform)'
+2026-09-19 10:22:20.600 +05:45 [INF] Route matched with {action = "ViewAllRestaurants", controller = "Restaurant"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] ViewAllRestaurants(FDP.Dtos.Restaurant.RestaurantQueryDto) on controller FDP.Controller.RestaurantController (FoodDeliveryPlatform).
+2026-09-19 10:22:20.606 +05:45 [INF] Executing OkObjectResult, writing value of type 'FDP.Dtos.Common.PagedResponseDto`1[[FDP.Dtos.Restaurant.ViewRestaurantDto, FoodDeliveryPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-09-19 10:22:20.606 +05:45 [INF] Executed action FDP.Controller.RestaurantController.ViewAllRestaurants (FoodDeliveryPlatform) in 5.904ms
+2026-09-19 10:22:20.606 +05:45 [INF] Executed endpoint 'FDP.Controller.RestaurantController.ViewAllRestaurants (FoodDeliveryPlatform)'
+2026-09-19 10:22:20.606 +05:45 [INF] Request finished HTTP/1.1 GET http://localhost:5107/api/Restaurant/View-all-restaurants?Page=1&PageSize=10 - 200 null application/json; charset=utf-8 10.9091ms
+2026-09-19 10:39:16.154 +05:45 [INF] Application is shutting down...
+2026-09-19 10:39:22.682 +05:45 [INF] Now listening on: http://localhost:5107
+2026-09-19 10:39:22.701 +05:45 [INF] Application started. Press Ctrl+C to shut down.
+2026-09-19 10:39:22.701 +05:45 [INF] Hosting environment: Development
+2026-09-19 10:39:22.701 +05:45 [INF] Content root path: /Users/madhusudanbhandari/Desktop/FDS/FDP/FoodDeliveryPlatform
+2026-09-19 10:39:46.848 +05:45 [INF] Application is shutting down...

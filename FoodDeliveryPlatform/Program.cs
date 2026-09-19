@@ -17,8 +17,22 @@ using Microsoft.OpenApi;
 using AutoMapper;
 using FDP.Hubs;
 using StackExchange.Redis;
+using Serilog;
+
 
 var builder=WebApplication.CreateBuilder(args);
+
+
+Log.Logger=new LoggerConfiguration()
+            .ReadFrom.Configuration(builder.Configuration)
+            .WriteTo.Console()
+            .WriteTo.File(
+                "Logs/log.txt",
+                rollingInterval:RollingInterval.Day
+            )
+            .CreateLogger();
+
+builder.Host.UseSerilog();
 
 builder.Services.AddControllers();
 
@@ -127,7 +141,16 @@ builder.Services.AddSingleton<ConnectionMultiplexer>(sp =>
 
 builder.Services.AddScoped<IRedisService, RedisService>();
 
-
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("ReactFrontend", policy =>
+    {
+        policy
+            .WithOrigins("http://localhost:5173")
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
 
 builder.Services.AddAutoMapper(cfg =>
 {
@@ -145,6 +168,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors("ReactFrontend");
 
 app.UseAuthentication();
 app.UseAuthorization();
