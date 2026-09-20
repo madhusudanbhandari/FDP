@@ -1,4 +1,4 @@
-# 🍔 Food Delivery Platform
+#  Food Delivery Platform
 
 A full-stack food delivery platform built with **ASP.NET Core Web API, React, PostgreSQL, Redis, and Docker**.
 
@@ -6,7 +6,7 @@ The project was developed to practice and demonstrate real-world backend concept
 
 ---
 
-## 🚀 Tech Stack
+##  Tech Stack
 
 ### Backend
 
@@ -46,9 +46,9 @@ The project was developed to practice and demonstrate real-world backend concept
 
 ---
 
-# ✨ Features
+#  Features
 
-## 🔐 Authentication & Authorization
+## Authentication & Authorization
 
 * User registration
 * User login
@@ -66,7 +66,7 @@ The project was developed to practice and demonstrate real-world backend concept
 
 ---
 
-## 🍽️ Restaurant Management
+##  Restaurant Management
 
 * Create restaurants
 * Update restaurants
@@ -85,7 +85,7 @@ GET /api/Restaurant?page=1&pageSize=10&search=pizza&isOpen=true&sortBy=rating&so
 
 ---
 
-## 📋 Menu Management
+##  Menu Management
 
 * Create menus
 * Add menu items
@@ -96,7 +96,7 @@ GET /api/Restaurant?page=1&pageSize=10&search=pizza&isOpen=true&sortBy=rating&so
 
 ---
 
-## 🛒 Cart
+##  Cart
 
 * One cart per user
 * Add items
@@ -107,7 +107,7 @@ GET /api/Restaurant?page=1&pageSize=10&search=pizza&isOpen=true&sortBy=rating&so
 
 ---
 
-## 📦 Orders
+##  Orders
 
 * Create orders from cart
 * Order status management
@@ -134,7 +134,7 @@ Delivered
 
 ---
 
-## 💳 Payments
+## Payments
 
 * Payment creation
 * Payment status tracking
@@ -144,7 +144,7 @@ Delivered
 
 ---
 
-## 🚚 Delivery
+##  Delivery
 
 * Delivery creation
 * Assign delivery person
@@ -164,7 +164,7 @@ Delivered
 
 ---
 
-## ⭐ Reviews
+##  Reviews
 
 * Customers can review orders
 * Restaurant reviews
@@ -173,7 +173,7 @@ Delivered
 
 ---
 
-## 🔔 Notifications
+##  Notifications
 
 * User notifications
 * Notification persistence
@@ -187,7 +187,7 @@ SignalR hub:
 
 ---
 
-# ⚡ Redis Caching
+#  Redis Caching
 
 Redis is used to cache frequently accessed restaurant data.
 
@@ -225,7 +225,7 @@ Redis cache also uses **TTL** and cache invalidation when restaurant data change
 
 ---
 
-# 🧱 Backend Architecture
+#  Backend Architecture
 
 The backend follows a layered architecture:
 
@@ -276,7 +276,7 @@ This separation keeps business logic out of controllers and makes the applicatio
 
 ---
 
-# 🗄️ Database
+#  Database
 
 The application uses **PostgreSQL** with Entity Framework Core.
 
@@ -306,7 +306,7 @@ db.Database.Migrate();
 
 ---
 
-# 🔄 Background Service
+# Background Service
 
 The project contains a hosted background service:
 
@@ -334,7 +334,7 @@ to safely work with scoped dependencies.
 
 ---
 
-# 📝 Logging
+#  Logging
 
 The application uses **Serilog** for structured logging.
 
@@ -366,7 +366,7 @@ Logging is used for:
 
 ---
 
-# ❤️ Health Checks
+#  Health Checks
 
 The application exposes:
 
@@ -388,7 +388,7 @@ A healthy response confirms that the required services are available.
 
 ---
 
-# 🐳 Docker
+#  Docker
 
 The complete application is containerized.
 
@@ -440,7 +440,7 @@ docker compose down
 
 ---
 
-# 🔧 Environment Configuration
+#  Environment Configuration
 
 Sensitive configuration is supplied through environment variables.
 
@@ -463,7 +463,7 @@ Make sure it is included in `.gitignore`:
 
 ---
 
-# 📡 API
+#  API
 
 The backend API is exposed through:
 
@@ -481,7 +481,7 @@ Swagger can be enabled for API development/testing.
 
 ---
 
-# 🛡️ Security
+#  Security
 
 The project implements:
 
@@ -502,7 +502,7 @@ Authorization: Bearer <JWT>
 
 ---
 
-# 🧪 Testing
+#  Testing
 
 Testing is planned/being expanded around:
 
@@ -514,7 +514,7 @@ Testing is planned/being expanded around:
 
 ---
 
-# 📂 Project Structure
+# Project Structure
 
 ```text
 FoodDeliveryPlatform/
@@ -559,7 +559,7 @@ FoodDeliveryPlatform/
 
 ---
 
-# 🧠 Concepts Practiced
+# Concepts Practiced
 
 This project was built as a practical learning project for modern .NET development.
 
@@ -601,7 +601,7 @@ Key concepts include:
 
 ---
 
-# 🛣️ Future Improvements
+# Future Improvements
 
 Planned improvements include:
 
@@ -618,14 +618,11 @@ Planned improvements include:
 
 ---
 
-# 🎯 Project Goal
+#  Project Goal
 
 The goal of this project is to build a realistic full-stack food delivery application while learning how modern **ASP.NET Core applications are designed, secured, cached, containerized, tested, and prepared for deployment**.
 
 ---
 
-## 👨‍💻 Author
-
-**Madhusudan Bhandari**
 
 Built as a practical full-stack .NET learning and portfolio project.
