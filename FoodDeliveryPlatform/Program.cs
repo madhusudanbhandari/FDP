@@ -18,6 +18,7 @@ using AutoMapper;
 using FDP.Hubs;
 using StackExchange.Redis;
 using Serilog;
+using Microsoft.Extensions.Options;
 
 
 var builder=WebApplication.CreateBuilder(args);
@@ -161,7 +162,23 @@ builder.Services.AddAutoMapper(cfg =>
 
 builder.Services.AddSignalR();
 
+builder.Services.AddHealthChecks()
+                .AddNpgSql(
+                    builder.Configuration.GetConnectionString("DefaultConnection")!
+                )
+                .AddRedis(
+                    builder.Configuration["Redis:ConnectionString"]!
+                );
+
+
+
 var app=builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var db=scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    db.Database.Migrate();
+}
 
 app.UseMiddleware<GlobalExceptionMiddleware>();
 
@@ -181,5 +198,7 @@ app.MapControllers();
 app.MapHub<NotificationHub>("/notificationHub");
 
 // app.UseHttpsRedirection();
+
+app.MapHealthChecks("/health");
 
 app.Run();

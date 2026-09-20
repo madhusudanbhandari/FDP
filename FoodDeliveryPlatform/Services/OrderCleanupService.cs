@@ -42,11 +42,19 @@ public class OrderCleanupService : BackgroundService
                     await orderRepository.SaveChangesAsync();
                 }
 
+                //if the app shuts down, then stopping token will be cancelled
+                //then the delay will throw OperationCancelledException
                 await Task.Delay(
                     TimeSpan.FromMinutes(5),
                     stoppingToken
                 );
-            }catch(Exception ex)
+
+                //so we handle it this way known as graceful shutdown
+            }catch(OperationCanceledException) when (stoppingToken.IsCancellationRequested)
+            {
+                _logger.LogInformation("Order cleanup service is stopping");
+            }
+            catch(Exception ex)
             {
                 _logger.LogError(ex,
                 "Error while running order cleanup");

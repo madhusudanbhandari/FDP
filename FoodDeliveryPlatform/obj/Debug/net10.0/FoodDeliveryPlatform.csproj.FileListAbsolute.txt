@@ -150,3 +150,5 @@
 /Users/madhusudanbhandari/Desktop/FDS/FDP/FoodDeliveryPlatform/bin/Debug/net10.0/Serilog.Sinks.Console.dll
 /Users/madhusudanbhandari/Desktop/FDS/FDP/FoodDeliveryPlatform/bin/Debug/net10.0/Serilog.Sinks.Debug.dll
 /Users/madhusudanbhandari/Desktop/FDS/FDP/FoodDeliveryPlatform/bin/Debug/net10.0/Serilog.Sinks.File.dll
+/Users/madhusudanbhandari/Desktop/FDS/FDP/FoodDeliveryPlatform/bin/Debug/net10.0/HealthChecks.NpgSql.dll
+/Users/madhusudanbhandari/Desktop/FDS/FDP/FoodDeliveryPlatform/bin/Debug/net10.0/HealthChecks.Redis.dll
