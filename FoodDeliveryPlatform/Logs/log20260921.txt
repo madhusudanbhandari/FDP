@@ -29,3 +29,10 @@ StackExchange.Redis.RedisConnectionException: It was not possible to connect to 
    at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
    at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
    at FDP.Middleware.GlobalExceptionMiddleware.InvokeAsync(HttpContext context) in /Users/madhusudanbhandari/Desktop/FDS/FDP/FoodDeliveryPlatform/Middleware/GlobalExceptionMiddleware.cs:line 25
+2026-09-21 23:43:26.017 +05:45 [INF] Application is shutting down...
+2026-09-21 23:43:26.025 +05:45 [INF] Order cleanup service is stopping
+2026-09-21 23:43:33.812 +05:45 [INF] Now listening on: http://localhost:5107
+2026-09-21 23:43:33.832 +05:45 [INF] Application started. Press Ctrl+C to shut down.
+2026-09-21 23:43:33.832 +05:45 [INF] Hosting environment: Development
+2026-09-21 23:43:33.832 +05:45 [INF] Content root path: /Users/madhusudanbhandari/Desktop/FDS/FDP/FoodDeliveryPlatform
+2026-09-21 23:44:06.403 +05:45 [WRN] You do not have a valid license key for the Lucky Penny software AutoMapper. This is allowed for development and testing scenarios. If you are running in production you are required to have a licensed version. Please visit https://luckypennysoftware.com to obtain a valid license.
