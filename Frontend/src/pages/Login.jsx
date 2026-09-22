@@ -34,7 +34,7 @@ function Login() {
 
       localStorage.setItem("token", response.data.token);
 
-      navigate("/restaurants");
+      navigate("/dashboards");
     } catch (error) {
       
       if (error.response?.status === 401) {
