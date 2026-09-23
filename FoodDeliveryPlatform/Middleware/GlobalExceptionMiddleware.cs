@@ -45,7 +45,9 @@ public class GlobalExceptionMiddleware
             UnauthorizedAccessException=>StatusCodes.Status401Unauthorized,
             _ => StatusCodes.Status500InternalServerError
         };
-
+        context.Response.StatusCode=statusCode;
+        context.Response.ContentType="application/json";
+        
         var response = new
         {
             StatusCode=statusCode,

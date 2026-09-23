@@ -8,6 +8,7 @@ import RestaurantList from "./pages/customer/RestaurantList";
 import RestaurantDetails from "./pages/customer/RestaurantDetail";
 import Cart from "./pages/customer/Cart";
 
+
 function App() {
     return (
         <BrowserRouter>
@@ -31,6 +32,7 @@ function App() {
                 <Route path="/restaurants/:id"
                        element={<RestaurantDetails/>}
                   />
+
 
                 <Route
                     path="/cart"

@@ -4,6 +4,7 @@ using FDP.Interface;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
+using StackExchange.Redis;
 
 namespace FDP.Controller;
 
@@ -63,6 +64,27 @@ public class RestaurantController : ControllerBase
         int.TryParse(claim,out int Id);
 
         var restaurant=await _restaurantService.DeleteRestaurantAsync(id,Id);
+
+        return Ok(restaurant);
+    }
+
+    [Authorize(Roles="RestaurantOwner")]
+    [HttpGet("my-restaurants")]
+    public async Task<IActionResult> GetMyRestaurant()
+    {
+        var claim=User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+        if(!int.TryParse(claim,out int ownerId))
+        {
+            return Unauthorized();
+        }
+
+        var restaurant=await _restaurantService.GetMyRestaurantAsync(ownerId);
+
+        if (restaurant == null)
+        {
+            return NotFound();
+        }
 
         return Ok(restaurant);
     }

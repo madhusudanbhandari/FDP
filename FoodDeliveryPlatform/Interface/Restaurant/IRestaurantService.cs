@@ -12,4 +12,6 @@ public  interface IRestaurantService
     public Task<ViewRestaurantDto?> SeeRestaurantAsync(int id);
     public Task<PagedResponseDto<ViewRestaurantDto>> SeeAllRestaurantsAsync(RestaurantQueryDto query);
 
+    public Task<ViewRestaurantDto?> GetMyRestaurantAsync(int ownerId);
+
 }

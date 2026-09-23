@@ -1,111 +1,272 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import api from "../../services/api";
 import { getUserFromToken } from "../../utils/auth";
 
+import MenuSection from "./Menu";
+import CreateRestaurantForm from "./CreateRestaurant";
+import RestaurantSection from "./MyRestaurant";
+
 function RestaurantOwnerDashboard() {
-    const user = getUserFromToken();
+
     const navigate = useNavigate();
 
-    function handleLogout() {
-        localStorage.removeItem("token");
-        navigate("/login", { replace: true });
-    }
+    const [restaurant, setRestaurant] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState("");
+
+    const user = getUserFromToken();
 
     const name =
         user?.[
             "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"
-        ];
+        ] || "Restaurant Owner";
+
+    const email =
+        user?.[
+            "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"
+        ] || "";
+
+
+    useEffect(() => {
+        loadRestaurant();
+    }, []);
+
+
+    async function loadRestaurant() {
+
+        try {
+
+            const response = await api.get(
+                "Restaurant/my-restaurants"
+            );
+
+            setRestaurant(response.data);
+
+        } catch (error) {
+
+            if (error.response?.status === 404) {
+
+                setRestaurant(null);
+
+            } else {
+
+                console.error(error);
+
+                setError(
+                    error.response?.data?.message ||
+                    "Failed to load restaurant"
+                );
+            }
+
+        } finally {
+
+            setLoading(false);
+
+        }
+    }
+
+
+    function handleLogout() {
+
+        localStorage.removeItem("token");
+
+        navigate("/login", {
+            replace: true
+        });
+    }
+
+
+    function handleCreateRestaurant() {
+
+        setRestaurant({
+            creating: true
+        });
+
+    }
+
+
+    function handleRestaurantCreated(data) {
+
+        setRestaurant(data);
+
+    }
+
+
+    function handleRestaurantDeleted() {
+
+        setRestaurant(null);
+
+    }
+
+
+    function handleRestaurantUpdated(data) {
+
+        setRestaurant(data);
+
+    }
+
+
+    if (loading) {
+
+        return (
+            <div className="min-h-screen flex items-center justify-center bg-gray-100">
+
+                <div className="text-center">
+
+                    <div className="text-2xl font-semibold">
+                        Loading dashboard...
+                    </div>
+
+                    <p className="text-gray-500 mt-2">
+                        Please wait
+                    </p>
+
+                </div>
+
+            </div>
+        );
+    }
+
 
     return (
+
         <div className="min-h-screen bg-gray-100">
 
-            <nav className="bg-white shadow px-8 py-4 flex justify-between items-center">
+            {/* NAVBAR */}
 
-                <h1 className="text-xl font-bold text-indigo-600">
-                    FDP
-                </h1>
+            <nav className="bg-white shadow-sm">
 
-                <div className="flex items-center gap-6">
+                <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
 
-                    <span className="text-gray-700">
-                        Welcome, {name}
-                    </span>
+                    <div>
 
-                    <button
-                        onClick={handleLogout}
-                        className="bg-red-500 text-white px-4 py-2 rounded-lg"
-                    >
-                        Logout
-                    </button>
+                        <h1 className="text-2xl font-bold text-indigo-600">
+                            FDP
+                        </h1>
+
+                        <p className="text-sm text-gray-500">
+                            Restaurant Owner
+                        </p>
+
+                    </div>
+
+
+                    <div className="flex items-center gap-6">
+
+                        <div className="text-right">
+
+                            <p className="font-semibold text-gray-800">
+                                {name}
+                            </p>
+
+                            <p className="text-sm text-gray-500">
+                                {email}
+                            </p>
+
+                        </div>
+
+
+                        <button
+                            onClick={handleLogout}
+                            className="bg-red-500 hover:bg-red-600 text-white px-5 py-2 rounded-lg"
+                        >
+                            Logout
+                        </button>
+
+                    </div>
 
                 </div>
 
             </nav>
 
-            <main className="max-w-6xl mx-auto px-6 py-8">
+
+            {/* MAIN */}
+
+            <main className="max-w-7xl mx-auto px-6 py-10">
 
                 <h1 className="text-3xl font-bold text-gray-800">
-                    Restaurant Owner Dashboard
+                    Welcome, {name}
                 </h1>
 
-                <p className="mt-2 text-gray-600">
-                    Manage your restaurant, menu and orders.
+                <p className="text-gray-500 mt-2">
+                    Manage your restaurant and menu.
                 </p>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
 
-                    <Link
-                        to="/owner/restaurant"
-                        className="bg-white p-6 rounded-xl shadow hover:shadow-lg transition"
-                    >
-                        <h2 className="text-xl font-semibold">
-                            🏪 My Restaurant
+                {error && (
+
+                    <div className="bg-red-100 text-red-700 p-4 rounded-lg mt-6">
+                        {error}
+                    </div>
+
+                )}
+
+
+                {/* NO RESTAURANT */}
+
+                {!restaurant && (
+
+                    <div className="bg-white rounded-2xl shadow-sm p-10 mt-8 text-center">
+
+                        <div className="text-5xl mb-5">
+                            🍽️
+                        </div>
+
+                        <h2 className="text-2xl font-bold">
+                            Please create a restaurant
                         </h2>
 
-                        <p className="mt-2 text-gray-500">
-                            Create and manage your restaurant.
+                        <p className="text-gray-500 mt-3">
+                            You don't have a restaurant yet.
+                            Create one to start managing your
+                            food business.
                         </p>
-                    </Link>
 
-                    <Link
-                        to="/owner/menu"
-                        className="bg-white p-6 rounded-xl shadow hover:shadow-lg transition"
-                    >
-                        <h2 className="text-xl font-semibold">
-                            📋 Menu
-                        </h2>
+                        <button
+                            onClick={handleCreateRestaurant}
+                            className="mt-7 bg-indigo-600 hover:bg-indigo-700 text-white px-7 py-3 rounded-lg"
+                        >
+                            + Create Restaurant
+                        </button>
 
-                        <p className="mt-2 text-gray-500">
-                            Manage your restaurant menu.
-                        </p>
-                    </Link>
+                    </div>
 
-                    <Link
-                        to="/owner/menu-items"
-                        className="bg-white p-6 rounded-xl shadow hover:shadow-lg transition"
-                    >
-                        <h2 className="text-xl font-semibold">
-                            🍔 Menu Items
-                        </h2>
+                )}
 
-                        <p className="mt-2 text-gray-500">
-                            Add and manage food items.
-                        </p>
-                    </Link>
 
-                    <Link
-                        to="/owner/orders"
-                        className="bg-white p-6 rounded-xl shadow hover:shadow-lg transition"
-                    >
-                        <h2 className="text-xl font-semibold">
-                            📦 Orders
-                        </h2>
+                {/* CREATE RESTAURANT */}
 
-                        <p className="mt-2 text-gray-500">
-                            View and manage customer orders.
-                        </p>
-                    </Link>
+                {restaurant?.creating && (
 
-                </div>
+                    <CreateRestaurantForm
+                        onCreated={handleRestaurantCreated}
+                        onCancel={() => setRestaurant(null)}
+                    />
+
+                )}
+
+
+                {/* EXISTING RESTAURANT */}
+
+                {restaurant && !restaurant.creating && (
+
+                    <>
+
+                        <RestaurantSection
+                            restaurant={restaurant}
+                            onUpdated={handleRestaurantUpdated}
+                            onDeleted={handleRestaurantDeleted}
+                        />
+
+
+                        <MenuSection
+                            restaurant={restaurant}
+                        />
+
+                    </>
+
+                )}
 
             </main>
 

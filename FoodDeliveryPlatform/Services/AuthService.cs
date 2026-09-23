@@ -57,12 +57,12 @@ public class AuthService : IAuthService
 
         if (user == null)
         {
-            return null;
+            throw new UnauthorizedAccessException("Invalid email or password");
         }
 
         if (!BCrypt.Net.BCrypt.Verify(dto.Password,user.Password))
         {
-            return null;
+            throw new UnauthorizedAccessException("Invalid email or password");
         }
 
         var token=GenerateToken(user);

@@ -122,7 +122,6 @@ public class RestaurantService : IRestaurantService
         var restaurantDtos= restaurants.Items.Select(r =>new ViewRestaurantDto
         {
             Id=r.Id,
-            Name=r.Name,
             Address=r.Address,
             Capacity=r.Capacity,
             Special=r.Special,
@@ -205,5 +204,27 @@ public class RestaurantService : IRestaurantService
         return "Deleted successfully";
     }
     
+    public async Task<ViewRestaurantDto?> GetMyRestaurantAsync(int ownerId)
+    {
+        var restaurant=await _restaurantRepository.GetRestaurantByOwnerIdAsync(ownerId);
+
+        if (restaurant == null)
+        {
+            return null;
+
+        }
+
+        return new ViewRestaurantDto
+        {
+            Id=restaurant.Id,
+            Name=restaurant.Name,
+            Address=restaurant.Address,
+            Capacity=restaurant.Capacity,
+            Special=restaurant.Special,
+            IsOpen=restaurant.IsOpen,
+            Rating=restaurant.Rating,
+            ownerId=restaurant.OwnerId
+        };
+    }
 
 }
