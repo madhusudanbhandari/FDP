@@ -6,6 +6,7 @@ import Dashboard from "./pages/Dashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
 import RestaurantList from "./pages/customer/RestaurantList";
 import RestaurantDetails from "./pages/customer/RestaurantDetail";
+import Cart from "./pages/customer/Cart";
 
 function App() {
     return (
@@ -30,6 +31,10 @@ function App() {
                 <Route path="/restaurants/:id"
                        element={<RestaurantDetails/>}
                   />
+
+                <Route
+                    path="/cart"
+                    element={<Cart/>}></Route>
 
             </Routes>
         </BrowserRouter>

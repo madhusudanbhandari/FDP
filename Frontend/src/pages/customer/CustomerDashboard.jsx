@@ -1,9 +1,15 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { getUserFromToken } from "../../utils/auth";
 
 function CustomerDashboard() {
 
     const user = getUserFromToken();
+    const navigate=useNavigate();
+
+    function handleLogout(){
+        localStorage.removeItem("token");
+        navigate("/login",{replace:true});
+    }
 
     return (
         <div className="min-h-screen bg-gray-100">
@@ -18,7 +24,16 @@ function CustomerDashboard() {
                         "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"
                     ]}
                 </span>
+                <span>
+                    <button
+                    onClick={handleLogout}
+                    className="group relative inline-flex items-center gap-2 bg-red-500 hover:bg-red-600 active:bg-red-700 text-white font-medium px-4 py-2 rounded-lg shadow-sm hover:shadow-md transition-all duration-200 ease-out focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-offset-2"
+                    >
+                    Logout
+                    </button>
+                </span>
             </nav>
+                            
 
             <main className="max-w-6xl mx-auto px-6 py-8">
 
