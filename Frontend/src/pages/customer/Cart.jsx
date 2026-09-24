@@ -1,11 +1,15 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import api from "../../services/api";
 
 function Cart() {
+    const navigate = useNavigate();
+
     const [cart, setCart] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [checkoutLoading, setCheckoutLoading] = useState(false);
     const [error, setError] = useState("");
+    const [checkoutError, setCheckoutError] = useState("");
 
     useEffect(() => {
         fetchCart();
@@ -14,6 +18,7 @@ function Cart() {
     async function fetchCart() {
         try {
             setLoading(true);
+            setError("");
 
             const response = await api.get("/Cart");
 
@@ -58,6 +63,30 @@ function Cart() {
         } catch (error) {
             console.error(error);
             alert("Failed to remove item");
+        }
+    }
+
+    async function placeOrder() {
+        try {
+            setCheckoutLoading(true);
+            setCheckoutError("");
+
+            const response = await api.post("/Order");
+
+            console.log("ORDER CREATED:", response.data);
+
+            // Order successfully created
+            navigate("/orders");
+
+        } catch (error) {
+            console.error("ORDER ERROR:", error);
+
+            setCheckoutError(
+                error.response?.data?.message ||
+                "Failed to place order"
+            );
+        } finally {
+            setCheckoutLoading(false);
         }
     }
 
@@ -131,69 +160,86 @@ function Cart() {
                     My Cart
                 </h1>
 
+                {checkoutError && (
+                    <div className="bg-red-100 text-red-700 p-4 rounded-lg mt-6">
+                        {checkoutError}
+                    </div>
+                )}
+
                 <div className="bg-white rounded-xl shadow mt-6">
 
-                    {cart.cartItems.map((item) => (
+                    {cart.cartItems.map((item) => {
 
-                        <div
-                            key={item.id}
-                            className="border-b p-6 flex justify-between items-center"
-                        >
+                        const itemName =
+                            item.menuItem?.name ||
+                            item.menuItemName ||
+                            "Food Item";
 
-                            <div>
-                                <h2 className="text-xl font-semibold">
-                                    {item.menuItem?.name}
-                                </h2>
+                        const itemPrice =
+                            item.menuItem?.price ??
+                            item.price ??
+                            0;
 
-                                <p className="text-gray-500">
-                                    Rs. {item.menuItem?.price}
-                                </p>
+                        return (
+                            <div
+                                key={item.id}
+                                className="border-b p-6 flex justify-between items-center"
+                            >
+
+                                <div>
+                                    <h2 className="text-xl font-semibold">
+                                        {itemName}
+                                    </h2>
+
+                                    <p className="text-gray-500">
+                                        Rs. {itemPrice}
+                                    </p>
+                                </div>
+
+                                <div className="flex items-center gap-4">
+
+                                    <button
+                                        onClick={() =>
+                                            updateQuantity(
+                                                item.id,
+                                                item.quantity - 1
+                                            )
+                                        }
+                                        className="bg-gray-200 px-3 py-1 rounded"
+                                    >
+                                        −
+                                    </button>
+
+                                    <span className="font-semibold">
+                                        {item.quantity}
+                                    </span>
+
+                                    <button
+                                        onClick={() =>
+                                            updateQuantity(
+                                                item.id,
+                                                item.quantity + 1
+                                            )
+                                        }
+                                        className="bg-gray-200 px-3 py-1 rounded"
+                                    >
+                                        +
+                                    </button>
+
+                                    <button
+                                        onClick={() =>
+                                            removeItem(item.id)
+                                        }
+                                        className="text-red-500 ml-4"
+                                    >
+                                        Remove
+                                    </button>
+
+                                </div>
+
                             </div>
-
-                            <div className="flex items-center gap-4">
-
-                                <button
-                                    onClick={() =>
-                                        updateQuantity(
-                                            item.id,
-                                            item.quantity - 1
-                                        )
-                                    }
-                                    className="bg-gray-200 px-3 py-1 rounded"
-                                >
-                                    −
-                                </button>
-
-                                <span className="font-semibold">
-                                    {item.quantity}
-                                </span>
-
-                                <button
-                                    onClick={() =>
-                                        updateQuantity(
-                                            item.id,
-                                            item.quantity + 1
-                                        )
-                                    }
-                                    className="bg-gray-200 px-3 py-1 rounded"
-                                >
-                                    +
-                                </button>
-
-                                <button
-                                    onClick={() =>
-                                        removeItem(item.id)
-                                    }
-                                    className="text-red-500 ml-4"
-                                >
-                                    Remove
-                                </button>
-
-                            </div>
-
-                        </div>
-
-                    ))}
+                        );
+                    })}
 
                 </div>
 
@@ -208,9 +254,13 @@ function Cart() {
                     </div>
 
                     <button
-                        className="w-full bg-indigo-600 text-white py-3 rounded-lg mt-6"
+                        onClick={placeOrder}
+                        disabled={checkoutLoading}
+                        className="w-full bg-indigo-600 hover:bg-indigo-700 disabled:bg-gray-400 text-white py-3 rounded-lg mt-6"
                     >
-                        Proceed to Checkout
+                        {checkoutLoading
+                            ? "Placing Order..."
+                            : "Proceed to Checkout"}
                     </button>
 
                 </div>

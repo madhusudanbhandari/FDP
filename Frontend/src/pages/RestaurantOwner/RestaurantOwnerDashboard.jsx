@@ -6,6 +6,8 @@ import { getUserFromToken } from "../../utils/auth";
 import MenuSection from "./Menu";
 import CreateRestaurantForm from "./CreateRestaurant";
 import RestaurantSection from "./MyRestaurant";
+import OrdersSection from "./OrderSection";
+
 
 function RestaurantOwnerDashboard() {
 
@@ -263,6 +265,8 @@ function RestaurantOwnerDashboard() {
                         <MenuSection
                             restaurant={restaurant}
                         />
+
+                        <OrdersSection />
 
                     </>
 
