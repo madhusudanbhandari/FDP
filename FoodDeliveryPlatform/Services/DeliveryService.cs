@@ -65,54 +65,65 @@ public class DeliveryService : IDeliveryService
         return _mapper.Map<List<ViewDeliveryDto>>(deliveries);
     }
 
-    public async Task AssignDeliveryAsync(
-        int deliveryId,
-        int deliveryPersonId)
+    public async Task<List<ViewDeliveryDto>> GetAvailableDeliveriesAsync()
     {
-        var delivery = await _deliveryRepository
-            .GetByIdAsync(deliveryId);
-
-        if (delivery == null)
-            throw new NotFoundException(
-                "Delivery not found.");
-
-        if (delivery.DeliveryStatus != DeliveryStatus.Pending)
-            throw new BadRequestException(
-                "Only pending deliveries can be assigned.");
-
-        var user = await _authRepository
-            .GetByIdAsync(deliveryPersonId);
-
-        if (user == null)
-            throw new NotFoundException(
-                "Delivery person not found.");
-
-        if (user.Role !=ROLES.DeliveryPerson)
-            throw new BadRequestException(
-                "The selected user is not a delivery person.");
-
-        delivery.DeliveryPersonId = deliveryPersonId;
-        delivery.DeliveryStatus = DeliveryStatus.Assigned;
-        delivery.AssignedAt = DateTime.UtcNow;
-
-        await _deliveryRepository.SaveChangesAsync();
+        var deliveries=await _deliveryRepository.GetAvailableDeliveriesAsync();
+        return _mapper.Map<List<ViewDeliveryDto>> (deliveries);
     }
 
-    public async Task MarkPickedUpAsync(
-        int deliveryId,
-        int deliveryPersonId)
+    // public async Task AssignDeliveryAsync(
+    //     int deliveryId,
+    //     int deliveryPersonId)
+    // {
+    //     var delivery = await _deliveryRepository
+    //         .GetByIdAsync(deliveryId);
+
+    //     if (delivery == null)
+    //         throw new NotFoundException(
+    //             "Delivery not found.");
+
+    //     if (delivery.DeliveryStatus != DeliveryStatus.Pending)
+    //         throw new BadRequestException(
+    //             "Only pending deliveries can be assigned.");
+
+    //     var user = await _authRepository
+    //         .GetByIdAsync(deliveryPersonId);
+
+    //     if (user == null)
+    //         throw new NotFoundException(
+    //             "Delivery person not found.");
+
+    //     if (user.Role !=ROLES.DeliveryPerson)
+    //         throw new BadRequestException(
+    //             "The selected user is not a delivery person.");
+
+    //     delivery.DeliveryPersonId = deliveryPersonId;
+    //     delivery.DeliveryStatus = DeliveryStatus.Assigned;
+    //     delivery.AssignedAt = DateTime.UtcNow;
+
+    //     await _deliveryRepository.SaveChangesAsync();
+    // }
+
+    
+    public async Task MarkPickedUpAsync(int deliveryId, int deliveryPersonId)
     {
-        var delivery = await GetDeliveryForPerson(
-            deliveryId,
-            deliveryPersonId);
+        var delivery=await _deliveryRepository.GetByIdAsync(deliveryId);
 
-        if (delivery.DeliveryStatus != DeliveryStatus.Assigned)
+        if (delivery == null)
+        {
+            throw new NotFoundException("Delivery not found");
+        }
+
+        if (delivery.DeliveryStatus != DeliveryStatus.Pending)
+        {
             throw new BadRequestException(
-                "Delivery must be assigned before pickup.");
+                "This delivery is no longer available"
+            );
+        }
 
-        delivery.DeliveryStatus = DeliveryStatus.PickedUp;
-        delivery.PickedUpAt = DateTime.UtcNow;
-
+        delivery.DeliveryPersonId=deliveryPersonId;
+        delivery.DeliveryStatus=DeliveryStatus.PickedUp;
+        delivery.PickedUpAt=DateTime.UtcNow;
         await _deliveryRepository.SaveChangesAsync();
     }
 

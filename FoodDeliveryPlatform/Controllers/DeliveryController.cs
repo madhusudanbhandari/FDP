@@ -42,21 +42,31 @@ public class DeliveryController : ControllerBase
     }
 
     
-    [HttpPost("{id}/assign")]
-    [Authorize(Roles = "Admin")]
-    public async Task<IActionResult> Assign(
-        int id,
-        AssignDeliveryDto dto)
-    {
-        await _deliveryService.AssignDeliveryAsync(
-            id,
-            dto.DeliveryPersonId);
+    // [HttpPost("{id}/assign")]
+    // [Authorize(Roles = "Admin")]
+    // public async Task<IActionResult> Assign(
+    //     int id,
+    //     AssignDeliveryDto dto)
+    // {
+    //     await _deliveryService.AssignDeliveryAsync(
+    //         id,
+    //         dto.DeliveryPersonId);
 
-        return Ok(new
-        {
-            message = "Delivery assigned successfully."
-        });
+    //     return Ok(new
+    //     {
+    //         message = "Delivery assigned successfully."
+    //     });
+    // }
+
+    [HttpGet("available")]
+    [Authorize(Roles ="DeliveryPerson")]
+    public async Task<IActionResult> GetAvailableDeliveries()
+    {
+        var deliveries=await _deliveryService.GetAvailableDeliveriesAsync();
+
+        return Ok(deliveries);
     }
+
 
     [HttpGet("my")]
     [Authorize(Roles = "DeliveryPerson")]

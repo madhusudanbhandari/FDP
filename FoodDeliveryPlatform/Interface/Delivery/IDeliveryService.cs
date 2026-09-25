@@ -8,8 +8,8 @@ public interface IDeliveryService
     Task<ViewDeliveryDto?> GetByOrderIdAsync(int orderId, int userId);
     Task<List<ViewDeliveryDto>> GetAllAsync();
     Task<List<ViewDeliveryDto>> GetMyDeliveriesAsync(int deliveryPersonId);
-
-    Task AssignDeliveryAsync(int deliveryId,int deliveryPersonId);
+    Task<List<ViewDeliveryDto>> GetAvailableDeliveriesAsync();
+   // Task AssignDeliveryAsync(int deliveryId,int deliveryPersonId);
     Task MarkPickedUpAsync(int deliveryId, int deliveryPersonId);
     Task MarkOutForDeliveryAsync(int deliveryId, int deliveryPersonId);
 

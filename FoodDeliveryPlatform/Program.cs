@@ -19,6 +19,7 @@ using FDP.Hubs;
 using StackExchange.Redis;
 using Serilog;
 using Microsoft.Extensions.Options;
+using System.Text.Json.Serialization;
 
 
 var builder=WebApplication.CreateBuilder(args);
@@ -35,7 +36,12 @@ Log.Logger=new LoggerConfiguration()
 
 builder.Host.UseSerilog();
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+                .AddJsonOptions(options =>
+                {
+                    options.JsonSerializerOptions.Converters.Add(
+                        new JsonStringEnumConverter());
+                });
 
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddValidatorsFromAssemblyContaining<RegisterUserDtoValidator>();

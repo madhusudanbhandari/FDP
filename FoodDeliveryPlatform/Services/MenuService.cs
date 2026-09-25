@@ -1,7 +1,6 @@
 using FDP.Dtos.Menu;
 using FDP.Exceptions;
 using FDP.Interface;
-using FDP.Repository;
 
 namespace FDP.Services;
 

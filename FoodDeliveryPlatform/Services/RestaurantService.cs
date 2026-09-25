@@ -122,6 +122,7 @@ public class RestaurantService : IRestaurantService
         var restaurantDtos= restaurants.Items.Select(r =>new ViewRestaurantDto
         {
             Id=r.Id,
+            Name=r.Name,
             Address=r.Address,
             Capacity=r.Capacity,
             Special=r.Special,

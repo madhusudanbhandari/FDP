@@ -45,6 +45,9 @@ public class OrderRepository: IOrderRepository
     {
         return await _context.Orders
             .Where(r=>r.RestaurantId==restaurantId)
+            .Include(o=>o.OrderItems)
+                .ThenInclude(oi=>oi.MenuItem)
+            .OrderByDescending(o=>o.CreatedAt)
             .ToListAsync();
     }
 
@@ -52,6 +55,8 @@ public class OrderRepository: IOrderRepository
     {
         return await _context.Orders
             .Include(o=>o.Restaurant)
+            .Include(o=>o.OrderItems)
+                .ThenInclude(oi=>oi.MenuItem)
             .FirstOrDefaultAsync(o=>
             o.Id==orderId &&
             o.Restaurant.OwnerId==ownerId);

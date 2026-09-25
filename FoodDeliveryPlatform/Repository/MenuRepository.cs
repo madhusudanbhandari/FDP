@@ -15,7 +15,9 @@ public class MenuRepository : IMenuRepository
 
     public async Task<Menu?> GetMenuByIdAsync(int id)
     {
-        return await _context.Menus.FirstOrDefaultAsync(m=>m.Id==id);
+        return await _context.Menus.
+        Include(m=>m.Restaurant).
+        FirstOrDefaultAsync(m=>m.Id==id);
     }
 
     public async Task<List<Menu>> GetAllMenusAsync()

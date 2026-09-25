@@ -23,7 +23,7 @@ public class DeliveryRepository : IDeliveryRepository
     public async Task<Delivery?> GetByOrderIdAsync(int orderId)
     {
         return await _context.Deliveries
-                        .Include(d=>d.OrderId)
+                        .Include(d=>d.Order)
                         .FirstOrDefaultAsync(d=>d.Order.Id==orderId);
 
     }
@@ -42,6 +42,16 @@ public class DeliveryRepository : IDeliveryRepository
                 Where(d=>d.DeliveryPersonId==deliveryPersonId)
                 .Include(d=>d.Order)
                 .AsNoTracking()
+                .ToListAsync();
+    }
+
+    public async Task<List<Delivery>> GetAvailableDeliveriesAsync()
+    {
+        return await _context.Deliveries
+                .Where(d=>d.DeliveryStatus==enums.DeliveryStatus.Pending)
+                .Include(d=>d.Order)
+                .AsNoTracking()
+                .OrderBy(d=>d.Id)
                 .ToListAsync();
     }
 
