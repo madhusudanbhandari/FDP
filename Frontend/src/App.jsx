@@ -9,6 +9,7 @@ import RestaurantDetails from "./pages/customer/RestaurantDetail";
 import Cart from "./pages/customer/Cart";
 import Orders from "./pages/customer/Orders";
 import Notifications from "./pages/customer/Notifications";
+import Payment from "./pages/customer/Payment";
 
 function App() {
     return (
@@ -54,6 +55,14 @@ function App() {
                         </ProtectedRoute>
                     }
                 />
+                <Route
+                path="/payment/:orderId"
+                element={
+                    <ProtectedRoute>
+                        <Payment />
+                    </ProtectedRoute>
+                }
+            />
 
             </Routes>
         </BrowserRouter>

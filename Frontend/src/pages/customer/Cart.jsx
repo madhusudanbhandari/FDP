@@ -74,9 +74,10 @@ function Cart() {
             const response = await api.post("/Order");
 
             console.log("ORDER CREATED:", response.data);
-
+            
+            const order=response.data;
             // Order successfully created
-            navigate("/orders");
+            navigate(`/payment/${order.id}`);
 
         } catch (error) {
             console.error("ORDER ERROR:", error);
