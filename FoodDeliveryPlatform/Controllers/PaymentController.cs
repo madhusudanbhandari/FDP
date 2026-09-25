@@ -25,6 +25,8 @@ public class PaymentController : ControllerBase
                 User.FindFirstValue(ClaimTypes.NameIdentifier)!
         );
 
+        dto.OrderId=orderId;
+
         var payment=await _paymentService.CreatePaymentAsync(userId,dto);
         return Ok(payment);
     }

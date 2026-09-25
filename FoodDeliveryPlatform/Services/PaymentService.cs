@@ -40,7 +40,7 @@ public class PaymentService : IPaymentService
         if(order.Status!=enums.OrderStatus.Pending)
             throw new BadRequestException("This order cannot be paid fot");
 
-        var existingPayment=_paymentRepository.GetPaymentByOrderIdAsync(dto.OrderId);
+        var existingPayment=await _paymentRepository.GetPaymentByOrderIdAsync(dto.OrderId);
 
         if(existingPayment!=null)
             throw new BadRequestException("A Payment already exists for this order");
@@ -68,7 +68,6 @@ public class PaymentService : IPaymentService
             payment.TransactionId=providerResult.TransactionId;
             payment.PaidAt=DateTime.UtcNow;
 
-            order.Status=OrderStatus.Confirmed;
         }
         else
         {

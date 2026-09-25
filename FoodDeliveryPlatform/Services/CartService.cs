@@ -105,6 +105,20 @@ public class CartService : ICartService
     {
         var cart=await _cartRepository.GetCartByUserIdAsync(userId);
 
-        return  _mapper.Map<ViewCartDto>(cart);
-    }
+        if (cart == null)
+        {
+            return new ViewCartDto
+            {
+                UserId=userId,
+                TotalAmount=0,
+                CartItems=new List<ViewCartItemDto>()
+            };
+        }
+
+        var result=_mapper.Map<ViewCartDto>(cart);
+
+        result.TotalAmount=cart.CartItems.Sum(item=>item.MenuItem.Price*item.Quantity);
+
+        return result;
+        }
 }

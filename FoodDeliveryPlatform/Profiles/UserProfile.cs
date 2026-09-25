@@ -24,7 +24,15 @@ public class UserProfile : Profile
                 );
         CreateMap<MenuItem, ViewMenuItemDto>();
         CreateMap<Cart,ViewCartDto>();
-        CreateMap<CartItem,ViewCartItemDto>();
+        CreateMap<CartItem,ViewCartItemDto>()
+            .ForMember(
+                dest=>dest.MenuItemName,
+                opt=>opt.MapFrom(src=>src.MenuItem.Name)
+            )
+            .ForMember(
+                dest=>dest.Price,
+                opt=>opt.MapFrom(src=>src.MenuItem.Price)
+            );
 
         CreateMap<Order,ViewOrderDto>()
                 .ForMember(

@@ -314,3 +314,293 @@ System.UnauthorizedAccessException: Invalid email or password
    at FDP.Middleware.GlobalExceptionMiddleware.InvokeAsync(HttpContext context) in /Users/madhusudanbhandari/Desktop/FDS/FDP/FoodDeliveryPlatform/Middleware/GlobalExceptionMiddleware.cs:line 25
 2026-09-25 18:59:30.805 +05:45 [INF] Application is shutting down...
 2026-09-25 18:59:30.815 +05:45 [INF] Order cleanup service is stopping
+2026-09-25 19:00:07.658 +05:45 [INF] Now listening on: http://localhost:5107
+2026-09-25 19:00:07.678 +05:45 [INF] Application started. Press Ctrl+C to shut down.
+2026-09-25 19:00:07.678 +05:45 [INF] Hosting environment: Development
+2026-09-25 19:00:07.678 +05:45 [INF] Content root path: /Users/madhusudanbhandari/Desktop/FDS/FDP/FoodDeliveryPlatform
+2026-09-25 19:00:56.260 +05:45 [WRN] You do not have a valid license key for the Lucky Penny software AutoMapper. This is allowed for development and testing scenarios. If you are running in production you are required to have a licensed version. Please visit https://luckypennysoftware.com to obtain a valid license.
+2026-09-25 19:36:56.323 +05:45 [INF] Getting restaurants. Page:1, PageSize:10
+2026-09-25 19:37:33.780 +05:45 [ERR] Unhandled exception
+System.UnauthorizedAccessException: Invalid email or password
+   at FDP.Services.Auth.AuthService.LoginUserAsnyc(LoginUserDto dto) in /Users/madhusudanbhandari/Desktop/FDS/FDP/FoodDeliveryPlatform/Services/AuthService.cs:line 65
+   at FDP.Controller.AuthController.LoginUser(LoginUserDto dto) in /Users/madhusudanbhandari/Desktop/FDS/FDP/FoodDeliveryPlatform/Controllers/AuthController.cs:line 30
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at FDP.Middleware.GlobalExceptionMiddleware.InvokeAsync(HttpContext context) in /Users/madhusudanbhandari/Desktop/FDS/FDP/FoodDeliveryPlatform/Middleware/GlobalExceptionMiddleware.cs:line 25
+2026-09-25 21:30:01.495 +05:45 [INF] Getting restaurants. Page:1, PageSize:10
+2026-09-25 21:30:29.064 +05:45 [ERR] Unhandled exception
+FDP.Exceptions.NotFoundException: You cannot pay for another user's order
+   at FDP.Services.PaymentService.CreatePaymentAsync(Int32 userId, CreatePaymentDto dto) in /Users/madhusudanbhandari/Desktop/FDS/FDP/FoodDeliveryPlatform/Services/PaymentService.cs:line 35
+   at FDP.Controller.PaymentController.CreatePayment(Int32 orderId, CreatePaymentDto dto) in /Users/madhusudanbhandari/Desktop/FDS/FDP/FoodDeliveryPlatform/Controllers/PaymentController.cs:line 28
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at FDP.Middleware.GlobalExceptionMiddleware.InvokeAsync(HttpContext context) in /Users/madhusudanbhandari/Desktop/FDS/FDP/FoodDeliveryPlatform/Middleware/GlobalExceptionMiddleware.cs:line 25
+2026-09-25 21:30:38.995 +05:45 [ERR] Unhandled exception
+FDP.Exceptions.NotFoundException: You cannot pay for another user's order
+   at FDP.Services.PaymentService.CreatePaymentAsync(Int32 userId, CreatePaymentDto dto) in /Users/madhusudanbhandari/Desktop/FDS/FDP/FoodDeliveryPlatform/Services/PaymentService.cs:line 35
+   at FDP.Controller.PaymentController.CreatePayment(Int32 orderId, CreatePaymentDto dto) in /Users/madhusudanbhandari/Desktop/FDS/FDP/FoodDeliveryPlatform/Controllers/PaymentController.cs:line 28
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at FDP.Middleware.GlobalExceptionMiddleware.InvokeAsync(HttpContext context) in /Users/madhusudanbhandari/Desktop/FDS/FDP/FoodDeliveryPlatform/Middleware/GlobalExceptionMiddleware.cs:line 25
+2026-09-25 21:35:58.821 +05:45 [INF] Application is shutting down...
+2026-09-25 21:35:58.828 +05:45 [INF] Order cleanup service is stopping
+2026-09-25 21:36:09.395 +05:45 [INF] Now listening on: http://localhost:5107
+2026-09-25 21:36:09.417 +05:45 [INF] Application started. Press Ctrl+C to shut down.
+2026-09-25 21:36:09.417 +05:45 [INF] Hosting environment: Development
+2026-09-25 21:36:09.417 +05:45 [INF] Content root path: /Users/madhusudanbhandari/Desktop/FDS/FDP/FoodDeliveryPlatform
+2026-09-25 21:36:11.455 +05:45 [WRN] You do not have a valid license key for the Lucky Penny software AutoMapper. This is allowed for development and testing scenarios. If you are running in production you are required to have a licensed version. Please visit https://luckypennysoftware.com to obtain a valid license.
+2026-09-25 21:36:27.624 +05:45 [ERR] Unhandled exception
+System.UnauthorizedAccessException: Invalid email or password
+   at FDP.Services.Auth.AuthService.LoginUserAsnyc(LoginUserDto dto) in /Users/madhusudanbhandari/Desktop/FDS/FDP/FoodDeliveryPlatform/Services/AuthService.cs:line 65
+   at FDP.Controller.AuthController.LoginUser(LoginUserDto dto) in /Users/madhusudanbhandari/Desktop/FDS/FDP/FoodDeliveryPlatform/Controllers/AuthController.cs:line 30
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at FDP.Middleware.GlobalExceptionMiddleware.InvokeAsync(HttpContext context) in /Users/madhusudanbhandari/Desktop/FDS/FDP/FoodDeliveryPlatform/Middleware/GlobalExceptionMiddleware.cs:line 25
+2026-09-25 21:36:35.108 +05:45 [ERR] Unhandled exception
+System.UnauthorizedAccessException: Invalid email or password
+   at FDP.Services.Auth.AuthService.LoginUserAsnyc(LoginUserDto dto) in /Users/madhusudanbhandari/Desktop/FDS/FDP/FoodDeliveryPlatform/Services/AuthService.cs:line 65
+   at FDP.Controller.AuthController.LoginUser(LoginUserDto dto) in /Users/madhusudanbhandari/Desktop/FDS/FDP/FoodDeliveryPlatform/Controllers/AuthController.cs:line 30
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at FDP.Middleware.GlobalExceptionMiddleware.InvokeAsync(HttpContext context) in /Users/madhusudanbhandari/Desktop/FDS/FDP/FoodDeliveryPlatform/Middleware/GlobalExceptionMiddleware.cs:line 25
+2026-09-25 21:38:19.981 +05:45 [ERR] Unhandled exception
+System.UnauthorizedAccessException: Invalid email or password
+   at FDP.Services.Auth.AuthService.LoginUserAsnyc(LoginUserDto dto) in /Users/madhusudanbhandari/Desktop/FDS/FDP/FoodDeliveryPlatform/Services/AuthService.cs:line 65
+   at FDP.Controller.AuthController.LoginUser(LoginUserDto dto) in /Users/madhusudanbhandari/Desktop/FDS/FDP/FoodDeliveryPlatform/Controllers/AuthController.cs:line 30
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at FDP.Middleware.GlobalExceptionMiddleware.InvokeAsync(HttpContext context) in /Users/madhusudanbhandari/Desktop/FDS/FDP/FoodDeliveryPlatform/Middleware/GlobalExceptionMiddleware.cs:line 25
+2026-09-25 21:38:24.326 +05:45 [ERR] Unhandled exception
+System.UnauthorizedAccessException: Invalid email or password
+   at FDP.Services.Auth.AuthService.LoginUserAsnyc(LoginUserDto dto) in /Users/madhusudanbhandari/Desktop/FDS/FDP/FoodDeliveryPlatform/Services/AuthService.cs:line 65
+   at FDP.Controller.AuthController.LoginUser(LoginUserDto dto) in /Users/madhusudanbhandari/Desktop/FDS/FDP/FoodDeliveryPlatform/Controllers/AuthController.cs:line 30
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at FDP.Middleware.GlobalExceptionMiddleware.InvokeAsync(HttpContext context) in /Users/madhusudanbhandari/Desktop/FDS/FDP/FoodDeliveryPlatform/Middleware/GlobalExceptionMiddleware.cs:line 25
+2026-09-25 21:38:49.377 +05:45 [ERR] Unhandled exception
+System.UnauthorizedAccessException: Invalid email or password
+   at FDP.Services.Auth.AuthService.LoginUserAsnyc(LoginUserDto dto) in /Users/madhusudanbhandari/Desktop/FDS/FDP/FoodDeliveryPlatform/Services/AuthService.cs:line 60
+   at FDP.Controller.AuthController.LoginUser(LoginUserDto dto) in /Users/madhusudanbhandari/Desktop/FDS/FDP/FoodDeliveryPlatform/Controllers/AuthController.cs:line 30
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at FDP.Middleware.GlobalExceptionMiddleware.InvokeAsync(HttpContext context) in /Users/madhusudanbhandari/Desktop/FDS/FDP/FoodDeliveryPlatform/Middleware/GlobalExceptionMiddleware.cs:line 25
+2026-09-25 21:38:58.177 +05:45 [ERR] Unhandled exception
+System.UnauthorizedAccessException: Invalid email or password
+   at FDP.Services.Auth.AuthService.LoginUserAsnyc(LoginUserDto dto) in /Users/madhusudanbhandari/Desktop/FDS/FDP/FoodDeliveryPlatform/Services/AuthService.cs:line 60
+   at FDP.Controller.AuthController.LoginUser(LoginUserDto dto) in /Users/madhusudanbhandari/Desktop/FDS/FDP/FoodDeliveryPlatform/Controllers/AuthController.cs:line 30
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at FDP.Middleware.GlobalExceptionMiddleware.InvokeAsync(HttpContext context) in /Users/madhusudanbhandari/Desktop/FDS/FDP/FoodDeliveryPlatform/Middleware/GlobalExceptionMiddleware.cs:line 25
+2026-09-25 21:39:03.463 +05:45 [ERR] Unhandled exception
+System.UnauthorizedAccessException: Invalid email or password
+   at FDP.Services.Auth.AuthService.LoginUserAsnyc(LoginUserDto dto) in /Users/madhusudanbhandari/Desktop/FDS/FDP/FoodDeliveryPlatform/Services/AuthService.cs:line 60
+   at FDP.Controller.AuthController.LoginUser(LoginUserDto dto) in /Users/madhusudanbhandari/Desktop/FDS/FDP/FoodDeliveryPlatform/Controllers/AuthController.cs:line 30
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at FDP.Middleware.GlobalExceptionMiddleware.InvokeAsync(HttpContext context) in /Users/madhusudanbhandari/Desktop/FDS/FDP/FoodDeliveryPlatform/Middleware/GlobalExceptionMiddleware.cs:line 25
+2026-09-25 21:39:26.686 +05:45 [ERR] Unhandled exception
+System.UnauthorizedAccessException: Invalid email or password
+   at FDP.Services.Auth.AuthService.LoginUserAsnyc(LoginUserDto dto) in /Users/madhusudanbhandari/Desktop/FDS/FDP/FoodDeliveryPlatform/Services/AuthService.cs:line 60
+   at FDP.Controller.AuthController.LoginUser(LoginUserDto dto) in /Users/madhusudanbhandari/Desktop/FDS/FDP/FoodDeliveryPlatform/Controllers/AuthController.cs:line 30
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at FDP.Middleware.GlobalExceptionMiddleware.InvokeAsync(HttpContext context) in /Users/madhusudanbhandari/Desktop/FDS/FDP/FoodDeliveryPlatform/Middleware/GlobalExceptionMiddleware.cs:line 25
+2026-09-25 21:40:22.344 +05:45 [INF] Getting restaurants. Page:1, PageSize:10
+2026-09-25 22:12:19.592 +05:45 [INF] Application is shutting down...
+2026-09-25 22:12:19.603 +05:45 [INF] Order cleanup service is stopping
+2026-09-25 22:12:26.173 +05:45 [INF] Now listening on: http://localhost:5107
+2026-09-25 22:12:26.195 +05:45 [INF] Application started. Press Ctrl+C to shut down.
+2026-09-25 22:12:26.195 +05:45 [INF] Hosting environment: Development
+2026-09-25 22:12:26.195 +05:45 [INF] Content root path: /Users/madhusudanbhandari/Desktop/FDS/FDP/FoodDeliveryPlatform
+2026-09-25 22:12:33.586 +05:45 [WRN] You do not have a valid license key for the Lucky Penny software AutoMapper. This is allowed for development and testing scenarios. If you are running in production you are required to have a licensed version. Please visit https://luckypennysoftware.com to obtain a valid license.
+2026-09-25 22:17:58.201 +05:45 [INF] Application is shutting down...
+2026-09-25 22:17:58.209 +05:45 [INF] Order cleanup service is stopping
+2026-09-25 22:18:07.260 +05:45 [INF] Now listening on: http://localhost:5107
+2026-09-25 22:18:07.282 +05:45 [INF] Application started. Press Ctrl+C to shut down.
+2026-09-25 22:18:07.282 +05:45 [INF] Hosting environment: Development
+2026-09-25 22:18:07.282 +05:45 [INF] Content root path: /Users/madhusudanbhandari/Desktop/FDS/FDP/FoodDeliveryPlatform
+2026-09-25 22:18:10.762 +05:45 [WRN] You do not have a valid license key for the Lucky Penny software AutoMapper. This is allowed for development and testing scenarios. If you are running in production you are required to have a licensed version. Please visit https://luckypennysoftware.com to obtain a valid license.
+2026-09-25 22:18:14.569 +05:45 [ERR] Unhandled exception
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at FDP.Services.OrderService.<>c.<CreateOrderAsync>b__8_0(CartItem ci) in /Users/madhusudanbhandari/Desktop/FDS/FDP/FoodDeliveryPlatform/Services/OrderService.cs:line 55
+   at System.Linq.Enumerable.ListSelectIterator`2.MoveNext()
+   at System.Linq.Enumerable.DistinctIterator`1.MoveNext()
+   at System.Linq.Enumerable.TryGetSingle[TSource](IEnumerable`1 source, Boolean& found)
+   at System.Linq.Enumerable.Single[TSource](IEnumerable`1 source)
+   at FDP.Services.OrderService.CreateOrderAsync(Int32 userId) in /Users/madhusudanbhandari/Desktop/FDS/FDP/FoodDeliveryPlatform/Services/OrderService.cs:line 54
+   at FDP.Controller.OrderController.CreateOrder() in /Users/madhusudanbhandari/Desktop/FDS/FDP/FoodDeliveryPlatform/Controllers/OrderController.cs:line 29
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at FDP.Middleware.GlobalExceptionMiddleware.InvokeAsync(HttpContext context) in /Users/madhusudanbhandari/Desktop/FDS/FDP/FoodDeliveryPlatform/Middleware/GlobalExceptionMiddleware.cs:line 25
+2026-09-25 22:18:31.209 +05:45 [INF] Getting restaurants. Page:1, PageSize:10
+2026-09-25 22:19:02.307 +05:45 [ERR] Unhandled exception
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at FDP.Services.OrderService.<>c.<CreateOrderAsync>b__8_0(CartItem ci) in /Users/madhusudanbhandari/Desktop/FDS/FDP/FoodDeliveryPlatform/Services/OrderService.cs:line 55
+   at System.Linq.Enumerable.ListSelectIterator`2.MoveNext()
+   at System.Linq.Enumerable.DistinctIterator`1.MoveNext()
+   at System.Linq.Enumerable.TryGetSingle[TSource](IEnumerable`1 source, Boolean& found)
+   at System.Linq.Enumerable.Single[TSource](IEnumerable`1 source)
+   at FDP.Services.OrderService.CreateOrderAsync(Int32 userId) in /Users/madhusudanbhandari/Desktop/FDS/FDP/FoodDeliveryPlatform/Services/OrderService.cs:line 54
+   at FDP.Controller.OrderController.CreateOrder() in /Users/madhusudanbhandari/Desktop/FDS/FDP/FoodDeliveryPlatform/Controllers/OrderController.cs:line 29
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at FDP.Middleware.GlobalExceptionMiddleware.InvokeAsync(HttpContext context) in /Users/madhusudanbhandari/Desktop/FDS/FDP/FoodDeliveryPlatform/Middleware/GlobalExceptionMiddleware.cs:line 25
+2026-09-25 22:23:29.255 +05:45 [INF] Application is shutting down...
+2026-09-25 22:23:29.266 +05:45 [INF] Order cleanup service is stopping
+2026-09-25 22:23:40.910 +05:45 [INF] Now listening on: http://localhost:5107
+2026-09-25 22:23:40.930 +05:45 [INF] Application started. Press Ctrl+C to shut down.
+2026-09-25 22:23:40.930 +05:45 [INF] Hosting environment: Development
+2026-09-25 22:23:40.930 +05:45 [INF] Content root path: /Users/madhusudanbhandari/Desktop/FDS/FDP/FoodDeliveryPlatform
+2026-09-25 22:23:42.830 +05:45 [WRN] You do not have a valid license key for the Lucky Penny software AutoMapper. This is allowed for development and testing scenarios. If you are running in production you are required to have a licensed version. Please visit https://luckypennysoftware.com to obtain a valid license.
+2026-09-25 22:26:45.820 +05:45 [INF] Application is shutting down...
+2026-09-25 22:26:45.828 +05:45 [INF] Order cleanup service is stopping
+2026-09-25 22:26:55.109 +05:45 [INF] Now listening on: http://localhost:5107
+2026-09-25 22:26:55.130 +05:45 [INF] Application started. Press Ctrl+C to shut down.
+2026-09-25 22:26:55.130 +05:45 [INF] Hosting environment: Development
+2026-09-25 22:26:55.130 +05:45 [INF] Content root path: /Users/madhusudanbhandari/Desktop/FDS/FDP/FoodDeliveryPlatform
+2026-09-25 22:26:57.878 +05:45 [WRN] You do not have a valid license key for the Lucky Penny software AutoMapper. This is allowed for development and testing scenarios. If you are running in production you are required to have a licensed version. Please visit https://luckypennysoftware.com to obtain a valid license.
+2026-09-25 22:47:51.399 +05:45 [INF] Application is shutting down...
+2026-09-25 22:47:51.410 +05:45 [INF] Order cleanup service is stopping
