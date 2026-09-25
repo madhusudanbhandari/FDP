@@ -8,7 +8,7 @@ import RestaurantList from "./pages/customer/RestaurantList";
 import RestaurantDetails from "./pages/customer/RestaurantDetail";
 import Cart from "./pages/customer/Cart";
 import Orders from "./pages/customer/Orders";
-
+import Notifications from "./pages/customer/Notifications";
 
 function App() {
     return (
@@ -45,6 +45,15 @@ function App() {
                 <Route
                     path="/cart"
                     element={<Cart/>}></Route>
+
+                <Route
+                    path="/notifications"
+                    element={
+                        <ProtectedRoute>
+                            <Notifications />
+                        </ProtectedRoute>
+                    }
+                />
 
             </Routes>
         </BrowserRouter>
