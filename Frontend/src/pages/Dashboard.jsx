@@ -2,7 +2,7 @@ import { Navigate } from "react-router-dom";
 import { getUserRole } from "../utils/auth";
 
 import CustomerDashboard from "./customer/CustomerDashboard";
-import DeliveryDashboard from "./DeliveryPerson/DeliveryPersonDashboard";
+import DeliveryPersonDashboard from "./DeliveryPerson/DeliveryPersonDashboard";
 import AdminDashboard from "./Admin/AdminDashboard";
 import RestaurantOwnerDashboard from "./RestaurantOwner/RestaurantOwnerDashboard";
 
@@ -21,7 +21,7 @@ function Dashboard(){
             return <AdminDashboard/>;
         
         case "DeliveryPerson":
-            return <DeliveryDashboard/>;
+            return <DeliveryPersonDashboard/>;
 
         default:
             return <Navigate to="/" replace/>;
