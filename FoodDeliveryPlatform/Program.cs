@@ -20,6 +20,7 @@ using StackExchange.Redis;
 using Serilog;
 using Microsoft.Extensions.Options;
 using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 
 
 var builder=WebApplication.CreateBuilder(args);
@@ -196,6 +197,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseCors("ReactFrontend");
 
+
+
 app.UseAuthentication();
 app.UseAuthorization();
 
@@ -204,7 +207,25 @@ app.MapControllers();
 app.MapHub<NotificationHub>("/notificationHub");
 
 // app.UseHttpsRedirection();
+app.MapHealthChecks("/health", new HealthCheckOptions
+{
+    ResponseWriter = async (context, report) =>
+    {
+        context.Response.ContentType = "application/json";
 
-app.MapHealthChecks("/health");
+        var result = new
+        {
+            status = report.Status.ToString(),
+            checks = report.Entries.Select(x => new
+            {
+                name = x.Key,
+                status = x.Value.Status.ToString(),
+                error = x.Value.Exception?.Message
+            })
+        };
+
+        await context.Response.WriteAsJsonAsync(result);
+    }
+});
 
 app.Run();
