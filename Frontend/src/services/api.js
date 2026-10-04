@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-    baseURL: "http://localhost:5107/api/"
+    baseURL: "https://food-delivery-platform-i2y2.onrender.com/api"
 });
 
 api.interceptors.request.use((config) => {
