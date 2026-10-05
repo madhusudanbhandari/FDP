@@ -158,7 +158,8 @@ builder.Services.AddCors(options =>
         policy
             .WithOrigins(
                 "http://localhost:5173",
-                "https://fdp-git-main-madhusudanbhandaris-projects.vercel.app"
+                "https://fdp-git-main-madhusudanbhandaris-projects.vercel.app",
+                "https://fdp-nine.vercel.app"
 )
             .AllowAnyHeader()
             .AllowAnyMethod();
@@ -184,6 +185,7 @@ builder.Services.AddHealthChecks()
 
 var app=builder.Build();
 
+//for migrating the database automatically when the application starts
 using (var scope = app.Services.CreateScope())
 {
     var db=scope.ServiceProvider.GetRequiredService<AppDbContext>();
